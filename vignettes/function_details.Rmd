@@ -1,0 +1,50 @@
+---
+title: "Wrapper functions for data.table"
+author: "kleu046"
+date: "2021-08-22"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{function_details}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(wr.data.table)
+```
+
+# Introduction
+
+While ***data.table*** offers fast functions to tidy and summarize data, the syntax may often can often be hard to remember if not used or practised frequently.
+
+This package aims to provide *wrapper functions* to carry out common tasks using functions in the data.table library without having to remember the data.table syntax.
+
+This vignette outlines detail usages for these wrapper function
+
+## data.table.withRownames()
+
+This function converts a data.frame into a data.table and use the row names as the first column.
+
+This is equivalent to:
+
+> data.table(df, keep.rownames = True)
+
+For examples, the *mtcars* contains car manufacturers and models as row names.
+
+```{r data.table.withRownames, echo=TRUE}
+dt_withRownames <- data.table.withRownames(mtcars)
+
+head(dt_withRownames)
+```
+
+if a *data.table* is provided as arugment to this function, it does nothing but returning the input.
+
+Inputs other than data.frame or data.table will result in an error.

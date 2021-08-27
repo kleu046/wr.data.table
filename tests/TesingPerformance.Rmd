@@ -1,0 +1,65 @@
+---
+title: "TestScript"
+author: "Ka Lok Leung"
+date: "24/08/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+library(wr.data.table)
+library(data.table)
+library(dplyr)
+```
+
+```{r generate_data}
+dt <- data.table(mtcars)
+
+dtwithmanyrows <- function(dt, n) {
+  for (i in 1:n) {
+    dt <- rbind(dt, dt)
+  }
+  data.table(dt)
+}
+
+manyRows <- lapply(c(2,5,10),function(x){dtwithmanyrows(dt, x)})
+str(manyRows)
+
+
+dtwithmanycols <- function(dt,n ) {
+  for (i in 1:n) {
+    dt <- cbind(dt, dt)
+  }
+  data.table(dt, check.names = TRUE)
+}
+
+manyCols <- lapply(c(2,5,10), function(x){dtwithmanycols(dt, x)})
+str(manyCols)
+
+getDT <- function(x) {
+  x[1]
+}
+```
+
+```{r wr.order_rows}
+# wr.order
+result_wr.order_rows <- purrr::map(manyRows, function(x) {
+  microbenchmark::microbenchmark(
+    wr.order(getDT(x), am, vs),
+    setorder(getDT(x),am,vs),
+    getDT(x) |> arrange(am, vs))
+})
+result_wr.order_rows
+purrr::map(result, boxplot)
+```
+
+```{r wr.order_cols}
+result_wr.orer_cols <- purrr::map(manyCols, function(x) {
+  microbenchmark::microbenchmark(
+    wr.order(getDT(x), am, vs),
+    setorder(getDT(x),am,vs),
+    getDT(x) |> dplyr::arrange(am, vs))
+})
+result_wr.orer_cols
+purrr::map(result, boxplot)
+```
