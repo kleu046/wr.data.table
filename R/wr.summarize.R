@@ -38,6 +38,8 @@ wr.summarise <- function(dt, ...) {
   # print(attributes(dt)$group |> colnames())
 }
 
+mtcars[1,]
+
 # library(data.table)
 # dt <- data.table(mtcars) |> wr.group_by(am)
 #
