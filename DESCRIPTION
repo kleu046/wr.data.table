@@ -2,10 +2,10 @@ Package: wr.data.table
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Ka LOk",
-           family = "Leung",
+    person(given = "kleu046",
+           family = "R",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "rkleu046@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: What the package does (one paragraph).
 License: GPL (>= 3)
