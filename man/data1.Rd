@@ -7,8 +7,16 @@
 \format{
 A \code{data.frame} with columns:
 \describe{
-\item{mpg}{miles per gallon}
-\item{etc}{...etc}
+\item{mpg}{Miles per US gallon}
+\item{cyl}{No. of engine cylinder}
+\item{disp}{Engine displacement (cu. in.)}
+\item{hp}{Gross horsepower}
+\item{drat}{Rear axle ratio}
+\item{wt}{Weight of the vehicle lb/1000}
+\item{qsec}{1/4 mile time}
+\item{vs}{Engine cylinder configuration 0 = v-shape, 1 = in-line}
+\item{am}{0 = automatic, 1 = manual}
+\item{carb}{Number of carburetors}
 }
 }
 \source{
@@ -18,7 +26,7 @@ from base R
 data1
 }
 \description{
-mtcars
+mtcars - data.frame with row names
 }
 \examples{
 \dontrun{

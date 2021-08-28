@@ -3,10 +3,11 @@
 #'
 #' For more information about \code{data.table} and \code{setorder()} \href{http://www.google.com}{Google it}.
 #'
-#' @usage wr.assignCols(dt, ...)
+#' @usage wr.assigncols(dt, ...)
 #'
 #' @param dt a \code{data.table}
-#' @param ... some parameters #####
+#' @param ... expression setting up a new column.  E.g. kmpl = mpg / 2.35215.
+#' More than one new columns can be created by having expressions separated by commas
 #'
 #' @return returns a \code{data.table}
 #'
@@ -14,10 +15,12 @@
 #'
 #' @examples
 #' \dontrun{
-#'   dt <- data.table(mtcars)
+  #' dt <- data.table(mtcars)
+  #' wr.assigncols(dt, kmpl = mpg / 2.35215, wt_in_kg = wt / 2.20462) # creating two columns / converted units
+  #' wr.assigncols(dt, am = NULL) # remove a column
 #' }
 #' @export
-wr.assignCols <- function(dt, ...) {
+wr.assigncols <- function(dt, ...) {
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
   expr <- as.list(match.call())
   colNames <- names(expr)[3:length(names(expr))]

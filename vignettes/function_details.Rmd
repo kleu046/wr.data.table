@@ -39,10 +39,10 @@ This is equivalent to:
 
 For examples, the *mtcars* contains car manufacturers and models as row names.
 
-```{r data.table.withRownames, echo=TRUE}
-dt_withRownames <- data.table.withRownames(mtcars)
+```{r wr_dt_withRrwnames, echo=TRUE}
+dt <- wr_dt_withrownames(mtcars)
 
-head(dt_withRownames)
+head(dt)
 ```
 
 if a *data.table* is provided as arugment to this function, it does nothing but returning the input.

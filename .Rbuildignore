@@ -1,3 +1,2 @@
-^wr\.data\.table\.Rproj$
+^.*\.Rproj$
 ^\.Rproj\.user$
-^LICENSE\.md$

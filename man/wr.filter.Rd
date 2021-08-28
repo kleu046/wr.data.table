@@ -6,6 +6,21 @@
 \usage{
 wr.filter(dt, condition)
 }
+\arguments{
+\item{dt}{input \code{data.table}}
+
+\item{condition}{a valid R conditional expression}
+}
 \description{
 Function to filter rows of data by condition
+}
+\examples{
+\dontrun{
+wr.filter(data.table(mtcars),mpg > 20)  # return all rows where mpg is > 20
+wr.filter(data.table(mtcars), mpg > 20, vs = 1, am = 0)
+# return all rows where mpg is > 20, vs = 1, am = 0
+
+wr.filtre(data.table(mtcars), "mpg > 20") # error - conditions should not be passed as characters
+}
+
 }

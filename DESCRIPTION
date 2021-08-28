@@ -14,10 +14,11 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
-    data.table
+    data.table,
+    testthat
 Suggests: 
     rmarkdown,
     knitr
 VignetteBuilder: knitr
 Depends: 
-    R (>= 2.10)
+    R (>= 2.10),
