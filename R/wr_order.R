@@ -3,10 +3,11 @@
 #'
 #' For more information about \code{data.table} and \code{setorder()} \href{http://www.google.com}{Google it}.
 #'
-#' @usage wr.order(dt, ...)
+#' @usage wr_order(dt, ...)
 #'
 #' @param dt a \code{data.table}
-#' @param ... column names without quotes
+#' @param ... column names.  Multiple column names are allowed.
+#' The function will order the row by the columns in the order they are provided in the arguments
 #'
 #' @return returns a \code{data.table}
 #'
@@ -15,10 +16,10 @@
 #' @examples
 #' \dontrun{
 #'   dt <- data.table(mtcars)
-#'   wr.order(dt, gear, am, vs)
+#'   wr_order(dt, gear, am, vs)
 #' }
 #' @export
-wr.order <- function(dt, ...) {
+wr_order <- function(dt, ...) {
   expr <- match.call()
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
   expr <- lapply(expr[3:length(expr)], function(x){x})
@@ -30,7 +31,7 @@ wr.order <- function(dt, ...) {
   dt
 }
 
-#wr.order <- function(dt, ...) {
+#wr_order <- function(dt, ...) {
 #  expr <- match.call()
 #  stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 #  argsAsString <- list()

@@ -3,7 +3,7 @@
 #' @import data.table
 #'
 #' @export
-wr.select <- function(dt, ...) {
+wr_select <- function(dt, ...) {
   expr <- match.call()
 
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
@@ -37,7 +37,7 @@ wr.select <- function(dt, ...) {
 }
 
 # good code for selecting just one variable/column
-# wr.select <- function(dt, ...) {
+# wr_select <- function(dt, ...) {
 #   expr <- match.call()
 #
 #   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
@@ -53,7 +53,7 @@ wr.select <- function(dt, ...) {
 #}
 
 # good code to select range and separate columns at the same time
-#wr.select <- function(dt, ...) {
+#wr_select <- function(dt, ...) {
 #  expr <- match.call()
 #
 #  stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
