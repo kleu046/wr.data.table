@@ -25,10 +25,9 @@ wr_order <- function(dt, ...) {
   expr <- lapply(expr[3:length(expr)], function(x){x})
   constructCall <- as.call(c(
     as.name("setorder"),
-    c(quote(dt),expr)
+    c(quote(copy(dt)),expr)
   ))
   eval(constructCall)
-  dt
 }
 
 #wr_order <- function(dt, ...) {

@@ -26,7 +26,7 @@ wr.summarise <- function(dt, ...) {
     argsAsString[i-2] <- deparse(expr[[i]])
     argsExpr <- expr[[i]]
   }
-  callAsString <- paste0("dt[,`:=`(",
+  callAsString <- paste0("dt[,.(",
                          paste(
                            paste(colNames, argsAsString,sep='='),
                            collapse=','),

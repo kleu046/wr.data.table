@@ -29,10 +29,12 @@ wr_assigncols <- function(dt, ...) {
     argsAsString[i-2] <- deparse(expr[[i]])
     argsExpr <- expr[[i]]
   }
-  callAsString <- paste0("dt[,`:=`(",
-                         paste(
-                           paste(colNames, argsAsString,sep='='),
-                           collapse=','),
-                        ")]")
-  eval(parse(text=callAsString))
+  #callAsString <- paste0("dt[,`:=`(",
+  #                       paste(
+  #                         paste(colNames, argsAsString,sep='='),
+  #                         collapse=','),
+  #                      ")]")
+  #eval(parse(text=callAsString))
+  exprAsString <- paste(paste(colNames, argsAsString,sep='='),collapse=',')
+  copy(dt)[,`:=`(eval(parse(text=callAsString)))]
 }

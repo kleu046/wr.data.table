@@ -3,7 +3,7 @@
 #' @import data.table
 #'
 #' @export
-wr.group_by <- function(dt, ...) {
+wr_groupby <- function(dt, ...) {
   expr <- match.call()
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
   expr <- lapply(expr[3:length(expr)], function(x){x})
