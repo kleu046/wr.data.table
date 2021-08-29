@@ -1,12 +1,12 @@
 #' Function for turning mtcars data.frame into data.table
 #'
-#' @description for convenience during debugging
+#' @description for convenience during debugging.  Creates a data.table called \code{dt} in the global environment
 #'
-#' @return mtcars as \code{data.table}
+#' @usage mkdt()
 #'
 #' @import data.table
 #'
 #' @export
 mkdt <- function(){
-  data.table(mtcars)
+  eval(quote(dt <- data.table::data.table(mtcars)), envir=parent.frame())
 }

@@ -6,9 +6,6 @@
 \usage{
 mkdt()
 }
-\value{
-mtcars as \code{data.table}
-}
 \description{
-for convenience during debugging
+for convenience during debugging.  Creates a data.table called \code{dt} in the global environment
 }
