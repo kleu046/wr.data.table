@@ -3,6 +3,7 @@
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.com/kleu046/wr.data.table.svg?branch=master)](https://travis-ci.com/kleu046/wr.data.table)
+[![R-CMD-check](https://github.com/kleu046/wr.data.table/workflows/R-CMD-check/badge.svg)](https://github.com/kleu046/wr.data.table/actions)
 <!-- badges: end -->
 
 This project started as a training and learning example for build R packages following the teachings on
