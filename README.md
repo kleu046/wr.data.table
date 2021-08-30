@@ -26,6 +26,11 @@ at in the global environment.
 
 You can install the released version of wr.data.table from [CRAN](https://CRAN.R-project.org) with:
 
+You can also install using devtools::install_github("https://github.com/kleu046/wr.data.table.git")
+
+The package can be downloaded as a zip file on https://github.com/kleu046/wr.data.table.git
+
+Use install.packages(file.choose(), repos=NULL, type="source") to install with the zip file
 ``` r
 install.packages("wr.data.table")
 ```
