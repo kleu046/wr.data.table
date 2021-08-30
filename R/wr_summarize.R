@@ -3,7 +3,7 @@
 #'
 #' For more information about \code{data.table} and \code{setorder()} \href{http://www.google.com}{Google it}.
 #'
-#' @usage wr_summarise(dt, ...)
+#' @usage wr_summarize(dt, ...)
 #'
 #' @param dt a \code{data.table}
 #' @param ... some parameters
@@ -17,7 +17,7 @@
 #'   dt <- data.table(mtcars)
 #' }
 #' @export
-wr_summarise <- function(dt, ...) {
+wr_summarize <- function(dt, ...) {
 
   # construct a character string of the summary call using data.table syntax
   mk_summarize_call <- function(columnNamesAsString, assignmentsAsString, groupNamesAsString=NULL) {
@@ -49,23 +49,27 @@ wr_summarise <- function(dt, ...) {
   # extract assignments from the call
   # store these assignments as a character vector
   assignAsString <- lapply(expr[3:length(expr)], function(x)deparse(x)) |> unname() |> unlist()
-  #assignAsString <- NULL
-  #for (i in 3:length(expr)) {
-  #  assignAsString[i-2] <- deparse(expr[[i]])
-  #}
 
   # NULL if input data.table does not contain $group attribute
-  groupAttrDT <- attributes(dt)$group
+  groupsAsString <- attributes(dt)$group
+
   callAsString <- NULL
-  if (is.null(groupAttrDT)) {
+
+  if (is.null(groupsAsString)) {
     callAsString <- mk_summarize_call(colsAsString, assignAsString)
+    eval(parse(text=callAsString))
   } else {
-    # column/variable names used for grouping (in the by stsatement)
-    groupsAsString <- colnames(groupAttrDT)[-length(colnames(groupAttrDT))] # get groupAttrDT column names
+    # column/variable names used for grouping (in the by statement)
+    # also order result by grouping variables
     callAsString <- mk_summarize_call(colsAsString,assignAsString, groupsAsString)
+    return_dt <- eval(parse(text=callAsString))
+    eval(parse(text=paste0(
+      "return_dt[order(",
+      paste(groupsAsString,collapse=","),
+      "),]")))
   }
-  eval(parse(text=callAsString))
 }
+
 
 ## works without groupAttrDTing
 #wr_summarise <- function(dt, ...) {

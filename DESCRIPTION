@@ -15,10 +15,11 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
     data.table,
-    testthat
 Suggests: 
     rmarkdown,
-    knitr
+    knitr,
+    testthat
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10),
+Config/testthat/edition: 3

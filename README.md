@@ -2,6 +2,7 @@
 # wr.data.table
 
 <!-- badges: start -->
+[![Travis build status](https://travis-ci.com/kleu046/wr.data.table.svg?branch=master)](https://travis-ci.com/kleu046/wr.data.table)
 <!-- badges: end -->
 
 This project started as a training and learning example for build R packages following the teachings on

@@ -16,7 +16,8 @@
 #' @examples
 #' \dontrun{
   #' dt <- data.table(mtcars)
-  #' wr_assigncols(dt, kmpl = mpg / 2.35215, wt_in_kg = wt / 2.20462) # creating two columns / converted units
+  #' wr_assigncols(dt, kmpl = mpg / 2.35215, wt_in_kg = wt / 2.20462)
+  #' # creating two columns / converted units
   #' wr_assigncols(dt, am = NULL) # remove a column
 #' }
 #' @export
@@ -29,12 +30,10 @@ wr_assigncols <- function(dt, ...) {
     argsAsString[i-2] <- deparse(expr[[i]])
     argsExpr <- expr[[i]]
   }
-  #callAsString <- paste0("dt[,`:=`(",
-  #                       paste(
-  #                         paste(colNames, argsAsString,sep='='),
-  #                         collapse=','),
-  #                      ")]")
-  #eval(parse(text=callAsString))
-  exprAsString <- paste(paste(colNames, argsAsString,sep='='),collapse=',')
-  copy(dt)[,`:=`(eval(parse(text=callAsString)))]
+  callAsString <- paste0("dt[,`:=`(",
+                         paste(
+                           paste(colNames, argsAsString,sep='='),
+                           collapse=','),
+                        ")]")
+  eval(parse(text=callAsString))
 }

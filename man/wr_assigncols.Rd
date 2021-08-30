@@ -21,7 +21,8 @@ For more information about \code{data.table} and \code{setorder()} \href{http://
 \examples{
 \dontrun{
 dt <- data.table(mtcars)
-wr_assigncols(dt, kmpl = mpg / 2.35215, wt_in_kg = wt / 2.20462) # creating two columns / converted units
+wr_assigncols(dt, kmpl = mpg / 2.35215, wt_in_kg = wt / 2.20462)
+# creating two columns / converted units
 wr_assigncols(dt, am = NULL) # remove a column
 }
 }

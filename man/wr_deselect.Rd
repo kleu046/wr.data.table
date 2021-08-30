@@ -6,6 +6,11 @@
 \usage{
 wr_deselect(dt, ...)
 }
+\arguments{
+\item{dt}{a \code{data.table}}
+
+\item{...}{some parameters}
+}
 \description{
-This function is similar to \code{}
+This function is similar to
 }

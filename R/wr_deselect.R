@@ -1,14 +1,18 @@
 #' Function to subset data.table by removal columns/variables
 #'
-#' @description This function is similar to \code{}
+#' @description This function is similar to
 #'
 #' @usage wr_deselect(dt, ...)
+#'
+#' @param dt a \code{data.table}
+#' @param ... some parameters
 #'
 #' @import data.table
 #'
 #' @export
 wr_deselect <- function(dt, ...) {
   expr <- match.call()
+  #dt <- copy(dt)
 
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 
@@ -16,6 +20,7 @@ wr_deselect <- function(dt, ...) {
 
   # isRange
   exprAsStrings <- (lapply(expr, function(x) { deparse(x) }) |> unlist())
+  callAsString <- NULL
   for (s in exprAsStrings) {
     ifelse(grepl(":", s),
            callAsString <- paste0("dt[,!(",s,")]"),

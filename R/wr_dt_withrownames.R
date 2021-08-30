@@ -22,7 +22,8 @@
   #' df <- mtcars
   #' rownames(df) <- NULL
   #' wr_dt_withrownames(df)
-  #' # if data.frame has no row names, the returned data.table will create column rn with row index numbers
+  #' # if data.frame has no row names, the returned data.table will create column rn
+  #' with row index numbers
 #' }
 #'
 #' @export wr_dt_withrownames

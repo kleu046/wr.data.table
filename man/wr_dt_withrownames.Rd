@@ -31,7 +31,8 @@ wr_dt_withrownames(data.table(mtcars)) # this will throw an error because input 
 df <- mtcars
 rownames(df) <- NULL
 wr_dt_withrownames(df)
-# if data.frame has no row names, the returned data.table will create column rn with row index numbers
+# if data.frame has no row names, the returned data.table will create column rn
+with row index numbers
 }
 
 }
