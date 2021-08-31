@@ -1,5 +1,12 @@
 #' Function to group data by one or more specified variables
 #'
+#' @description some description
+#'
+#' @usage wr_groupby(dt, ...)
+#'
+#' @param dt a \code{data.table}
+#' @param ... some parameters
+#'
 #' @import data.table
 #'
 #' @export

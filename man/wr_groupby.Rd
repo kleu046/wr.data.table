@@ -6,6 +6,11 @@
 \usage{
 wr_groupby(dt, ...)
 }
+\arguments{
+\item{dt}{a \code{data.table}}
+
+\item{...}{some parameters}
+}
 \description{
-Function to group data by one or more specified variables
+some description
 }
