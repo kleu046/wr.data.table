@@ -11,40 +11,29 @@
 #'
 #' @export
 wr_deselect <- function(dt, ...) {
-  expr <- match.call()
-  #dt <- copy(dt)
-
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 
-  expr <- as.list(expr[-1:-2])
+  argsAsString <- as.character(as.list(match.call())[-1:-2])
 
   # isRange
-  exprAsStrings <- (lapply(expr, function(x) { deparse(x) }) |> unlist())
-  callAsString <- NULL
-  for (s in exprAsStrings) {
-    ifelse(grepl(":", s),
-           callAsString <- paste0("dt[,!(",s,")]"),
-           callAsString <- paste0("dt[,!(\"",s,"\")]"))
-    dt <- eval(parse(text=callAsString))
-  }
-  dt
-}
+  isRange <- unlist(lapply(argsAsString, function(x) {grepl(":", x)}))
 
-# good code for selecting just one variable/column
-# wr_select <- function(dt, ...) {
-#   expr <- match.call()
-#
-#   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
-#
-#   expr <- as.list(expr[-1:-2])
-#
-#   constructCall <- as.call(c(
-#     as.name("list"),
-#     c(expr)
-#   ))
-#
-#   dt[,eval(constructCall)]
-#}
+  rangeAsString <- argsAsString[isRange]
+  expandedRangeAsString <- lapply(rangeAsString, function(x) {expand_colnames(dt, x)})
+  expandedRangeAsString <- unlist(expandedRangeAsString)
+
+  # !isRange
+  individualAsString <- argsAsString[!isRange]
+
+  # combine
+  combinedColsAsString <- unique(c(expandedRangeAsString, individualAsString))
+
+  if(!all(combinedColsAsString %in% colnames(dt))) {
+    stop("one or more column names in ... does not exist")
+  } else {
+    copy(dt)[,-combinedColsAsString,with=F]
+  }
+}
 
 # good code to select range and separate columns at the same time
 #wr_select <- function(dt, ...) {

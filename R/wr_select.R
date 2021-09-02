@@ -18,10 +18,14 @@
 #'
 #' Do not input the column names as characters.
 #'
-#' Different the \code{dplyr::select()} where user can select the data.frame / tibble
+#' Different than \code{dplyr::select()} where user can select the data.frame / tibble
 #' with the column prefixed with "-", this function is only used for selecting
-#' columns/range of columns stated explicitly.  The function \link[wr.data.table]{wr_deselect} is
+#' columns/range of columns stated explicitly.  The function \code{\link[wr.data.table]{wr_deselect}} is
 #' used instead to perform "negative select".
+#'
+#' column selected by range always appear in first in the \code{data.table} (on the left-hand side)
+#'
+#' if column range is given in reverse order, the columns will appear in reverse order
 #'
 #' @return a \code{data.table}
 #'
@@ -34,84 +38,26 @@
 #'
 #' @export
 wr_select <- function(dt, ...) {
-  expr <- match.call()
-
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 
-  expr <- as.list(expr[-1:-2])
+  argsAsString <- as.character(as.list(match.call())[-1:-2])
 
   # isRange
-  isRange <- NULL
-  isRange <- lapply(expr, function(x) {grepl(":", deparse(x))}) |> unlist()
-  dt_range <- data.table()
-  if (length(expr[isRange]) >= 1) {
-    rangeExprAsStrings <- (lapply(expr[isRange], function(x) { deparse(x) }) |> unlist())
-    for (s in rangeExprAsStrings) {
-      callAsString <- paste0("copy(dt)[,",s,"]")
-      dt_range <- cbind(dt_range,eval(parse(text=callAsString)))
-    }
-  }
+  isRange <- unlist(lapply(argsAsString, function(x) {grepl(":", x)}))
 
-  # !is_Range
-  dt_separate <- data.table()
-  if (length(expr[!isRange]) >= 1) {
-    constructCall <- as.call(c(as.name("list"),c(expr[!isRange])))
+  rangeAsString <- argsAsString[isRange]
+  expandedRangeAsString <- lapply(rangeAsString, function(x) {expand_colnames(dt, x)})
+  expandedRangeAsString <- unlist(expandedRangeAsString)
 
-    dt_separate <- copy(dt)[,eval(constructCall)]
+  # !isRange
+  individualAsString <- argsAsString[!isRange]
 
+  # combine
+  combinedColsAsString <- unique(c(expandedRangeAsString, individualAsString))
+
+  if(!all(combinedColsAsString %in% colnames(dt))) {
+    stop("one or more column names in ... does not exist")
+  } else {
+    copy(dt)[,combinedColsAsString,with=F]
   }
-  dt_result <- cbind(dt_range, dt_separate)
-  if (length(unique(colnames(dt_result))) < length(dt_result)) {
-     warning("Non-unique column/variable names in returned data.table")
-  }
-  dt_result
 }
-
-# good code for selecting just one variable/column
-# wr_select <- function(dt, ...) {
-#   expr <- match.call()
-#
-#   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
-#
-#   expr <- as.list(expr[-1:-2])
-#
-#   constructCall <- as.call(c(
-#     as.name("list"),
-#     c(expr)
-#   ))
-#
-#   dt[,eval(constructCall)]
-#}
-
-# good code to select range and separate columns at the same time
-#wr_select <- function(dt, ...) {
-#  expr <- match.call()
-#
-#  stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
-#
-#  expr <- as.list(expr[-1:-2])
-#
-#  # isRange
-#  isRange <- lapply(expr, function(x) {grepl(":", deparse(x))}) |> unlist()
-#  dt_range <- data.table()
-#  if (length(expr[isRange]) >= 1) {
-#    rangeExprAsStrings <- (lapply(expr[isRange], function(x) { deparse(x) }) |> unlist())
-#    for (s in rangeExprAsStrings) {
-#      callAsString <- paste0("dt[,",s,"]")
-#      dt_range <- cbind(dt_range,eval(parse(text=callAsString)))
-#    }
-#  }
-#
-#  # !isRange
-#  dt_separate <- data.table()
-#  if (length(expr[!isRange]) >= 1) {
-#    constructCall <- as.call(c(
-#      as.name("list"),
-#      c(expr[!isRange])
-#    ))
-#
-#    dt_separate <- copy(dt)[,eval(constructCall)]
-#
-#  }
-#  cbind(dt_range, dt_separate)
-#}

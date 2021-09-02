@@ -23,16 +23,20 @@
 #' @export
 wr_assigncols <- function(dt, ...) {
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
-  expr <- as.list(match.call())
-  colNames <- names(expr)[3:length(names(expr))]
-  argsAsString <- list()
-  for (i in 3:length(expr)) {
-    argsAsString[i-2] <- deparse(expr[[i]])
-    argsExpr <- expr[[i]]
-  }
-  callAsString <- paste0("dt[,`:=`(",
+
+  # named list
+  # names = new column names (to be created)
+  # values in list = values for assignment
+  args <- as.list(match.call())[-1:-2]
+
+  newColNames <- names(args)
+
+  stopifnot("column names must be unique" =
+              length(unique(c(colnames(dt),newColNames))) == (length(colnames(dt)) + length(newColNames)))
+
+  callAsString <- paste0("copy(dt)[,`:=`(",
                          paste(
-                           paste(colNames, argsAsString,sep='='),
+                           paste(newColNames, args,sep='='),
                            collapse=','),
                         ")]")
   eval(parse(text=callAsString))

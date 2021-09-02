@@ -20,25 +20,26 @@
 #' }
 #' @export
 wr_order <- function(dt, ...) {
-  expr <- match.call()
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
+
+  expr <- match.call()
   expr <- lapply(expr[3:length(expr)], function(x){x})
-  constructCall <- as.call(c(
+
+    constructCall <- as.call(c(
     as.name("setorder"),
     c(quote(copy(dt)),expr)
   ))
+
   eval(constructCall)
 }
 
-#wr_order <- function(dt, ...) {
-#  expr <- match.call()
-#  stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
-#  argsAsString <- list()
-#  for (i in 3:length(expr)) {
-#    argsAsString[i-2] <- deparse(expr[[i]])
-#  }
-#  callAsString <- paste0("dt[order(",paste(argsAsString, collapse=","),")]")
-#  eval(parse(text=callAsString))
-#}
-
-
+# wr_order <- function(dt, ...) {
+#   expr <- match.call()
+#   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
+#   expr <- lapply(expr[3:length(expr)], function(x){x})
+#   constructCall <- as.call(c(
+#     as.name("setorder"),
+#     c(quote(copy(dt)),expr)
+#   ))
+#   eval(constructCall)
+# }

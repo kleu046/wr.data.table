@@ -48,7 +48,8 @@ wr_summarize <- function(dt, ...) {
 
   # extract assignments from the call
   # store these assignments as a character vector
-  assignAsString <- lapply(expr[3:length(expr)], function(x)deparse(x)) |> unname() |> unlist()
+  assignAsString <- lapply(expr[3:length(expr)], function(x)deparse(x))
+  assignAsString <- unlist(unname(assignAsString))
 
   # NULL if input data.table does not contain $group attribute
   groupsAsString <- attributes(dt)$group
