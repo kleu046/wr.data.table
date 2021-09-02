@@ -21,5 +21,5 @@ Suggests:
     testthat
 VignetteBuilder: knitr
 Depends: 
-    R (>= 2.10),
+    R (>= 4.1),
 Config/testthat/edition: 3

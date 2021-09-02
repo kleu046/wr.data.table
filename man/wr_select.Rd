@@ -29,10 +29,14 @@ A series of columns can selected in one go.  They can also be given as a range u
 
 Do not input the column names as characters.
 
-Different the \code{dplyr::select()} where user can select the data.frame / tibble
+Different than \code{dplyr::select()} where user can select the data.frame / tibble
 with the column prefixed with "-", this function is only used for selecting
-columns/range of columns stated explicitly.  The function \link[wr.data.table]{wr_deselect} is
+columns/range of columns stated explicitly.  The function \code{\link[wr.data.table]{wr_deselect}} is
 used instead to perform "negative select".
+
+column selected by range always appear in first in the \code{data.table} (on the left-hand side)
+
+if column range is given in reverse order, the columns will appear in reverse order
 }
 \examples{
 \dontrun{

@@ -23,7 +23,7 @@ library(wr.data.table)
 
 # Introduction
 
-While ***data.table*** offers fast functions to tidy and summarize data, the syntax may often can often be hard to remember if not used or practised frequently.
+While ***data.table*** offers blazing fast functions, the syntax may be hard to remember if not used frequently particularly to those who does not use data.table frequently.
 
 This package aims to provide *wrapper functions* to carry out common tasks using functions in the data.table library without having to remember the data.table syntax.
 
@@ -37,14 +37,10 @@ This is equivalent to:
 
 > data.table(df, keep.rownames = True)
 
-For examples, the *mtcars* contains car manufacturers and models as row names.
+```{r}
+dt <- wr_dt_withrownames(data1)
 
-```{r wr_dt_withRrwnames, echo=TRUE}
-dt <- wr_dt_withrownames(mtcars)
+dt |> wr_groupby(gear, vs) |> attributes()
 
-head(dt)
+dt |> wr_groupby(gear, vs) |> wr_summarize(mu_mpg=mean(mpg), sd_mpg=sd(mpg), n=.N)
 ```
-
-if a *data.table* is provided as arugment to this function, it does nothing but returning the input.
-
-Inputs other than data.frame or data.table will result in an error.

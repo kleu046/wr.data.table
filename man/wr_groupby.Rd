@@ -2,15 +2,16 @@
 % Please edit documentation in R/wr_groupby.R
 \name{wr_groupby}
 \alias{wr_groupby}
-\title{Function to group data by one or more specified variables}
+\title{Group data using variables}
 \usage{
 wr_groupby(dt, ...)
 }
 \arguments{
 \item{dt}{a \code{data.table}}
 
-\item{...}{some parameters}
+\item{...}{names of variables that are used for grouping}
 }
 \description{
-some description
+add $group attribute to data.table
+$group is a vector of variable anmes
 }
