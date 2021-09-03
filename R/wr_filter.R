@@ -14,7 +14,7 @@
   #' wr_filter(data.table(mtcars), mpg > 20, vs = 1, am = 0)
   #' # return all rows where mpg is > 20, vs = 1, am = 0
   #'
-  #' wr.filtre(data.table(mtcars), "mpg > 20") # error - conditions should not be parsed as characters
+  #' wr.filter(data.table(mtcars), "mpg > 20") # error - conditions should not be parsed as characters
 #' }
 #'
 #' @import data.table
