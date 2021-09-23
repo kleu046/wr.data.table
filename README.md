@@ -2,7 +2,7 @@
 # wr.data.table
 
 <!-- badges: start -->
-[![Travis build status](https://app.travis-ci.com/kleu046/wr.data.table.svg?token=zXCbCkvh7MhXzkjbdY8t&branch=master)](https://app.travis-ci.com/kleu046/wr.data.table.svg?token=zXCbCkvh7MhXzkjbdY8t&branch=master)
+[![Build Status](https://app.travis-ci.com/kleu046/assgnPkg.svg?branch=master)](https://app.travis-ci.com/kleu046/assgnPkg)
 [![R-CMD-check](https://github.com/kleu046/wr.data.table/workflows/R-CMD-check/badge.svg)](https://github.com/kleu046/wr.data.table/actions)
 <!-- badges: end -->
 
