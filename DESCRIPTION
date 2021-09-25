@@ -1,6 +1,6 @@
 Package: wr.data.table
 Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Version: 0.0.0.9100
 Authors@R: 
     person(given = "kleu046",
            family = "R",
