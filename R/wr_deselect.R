@@ -13,57 +13,18 @@
 wr_deselect <- function(dt, ...) {
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 
-  argsAsString <- as.character(as.list(match.call())[-1:-2])
+  args <- (substitute(list(...)))
 
-  # isRange
-  isRange <- unlist(lapply(argsAsString, function(x) {grepl(":", x)}))
+  argsAsString <- lapply(args[-1], as.character)
 
-  rangeAsString <- argsAsString[isRange]
-  expandedRangeAsString <- lapply(rangeAsString, function(x) {expand_colnames(dt, x)})
-  expandedRangeAsString <- unlist(expandedRangeAsString)
+  isRange <- grepl(":", argsAsString)
 
-  # !isRange
-  individualAsString <- argsAsString[!isRange]
+  argsAsStringIsRange <- lapply(argsAsString[isRange], function(x){
+      paste0(x[2], ":", x[3])
+  })
+  cols <- c(
+    sapply(argsAsStringIsRange, function(x) {expand_colnames(dt, x)}) %>% unlist(),
+    argsAsString[!isRange] %>% unlist())
 
-  # combine
-  combinedColsAsString <- unique(c(expandedRangeAsString, individualAsString))
-
-  if(!all(combinedColsAsString %in% colnames(dt))) {
-    stop("one or more column names in ... does not exist")
-  } else {
-    copy(dt)[,-combinedColsAsString,with=F]
-  }
+  dt[,!c(cols),with=F]
 }
-
-# good code to select range and separate columns at the same time
-#wr_select <- function(dt, ...) {
-#  expr <- match.call()
-#
-#  stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
-#
-#  expr <- as.list(expr[-1:-2])
-#
-#  # isRange
-#  isRange <- lapply(expr, function(x) {grepl(":", deparse(x))}) |> unlist()
-#  dt_range <- data.table()
-#  if (length(expr[isRange]) >= 1) {
-#    rangeExprAsStrings <- (lapply(expr[isRange], function(x) { deparse(x) }) |> unlist())
-#    for (s in rangeExprAsStrings) {
-#      callAsString <- paste0("dt[,",s,"]")
-#      dt_range <- cbind(dt_range,eval(parse(text=callAsString)))
-#    }
-#  }
-#
-#  # !isRange
-#  dt_separate <- data.table()
-#  if (length(expr[!isRange]) >= 1) {
-#    constructCall <- as.call(c(
-#      as.name("list"),
-#      c(expr[!isRange])
-#    ))
-#
-#    dt_separate <- copy(dt)[,eval(constructCall)]
-#
-#  }
-#  cbind(dt_range, dt_separate)
-#}

@@ -22,24 +22,7 @@
 wr_order <- function(dt, ...) {
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 
-  expr <- match.call()
-  expr <- lapply(expr[3:length(expr)], function(x){x})
+  args <- substitute(list(...))
+  eval(call("setorder",copy(dt), args[-1]))
 
-    constructCall <- as.call(c(
-    as.name("setorder"),
-    c(quote(copy(dt)),expr)
-  ))
-
-  eval(constructCall)
 }
-
-# wr_order <- function(dt, ...) {
-#   expr <- match.call()
-#   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
-#   expr <- lapply(expr[3:length(expr)], function(x){x})
-#   constructCall <- as.call(c(
-#     as.name("setorder"),
-#     c(quote(copy(dt)),expr)
-#   ))
-#   eval(constructCall)
-# }
