@@ -69,10 +69,12 @@ result_wr_summarize_rows <- purrr::map(manyRows, function(x){
   microbenchmark::microbenchmark(
     wr_groupby(getDT(x), gear, am) |> wr_summarize(mu_mpg=mean(mpg),sd_mpg=sd(mpg)),
     getDT(x)[,.(mu_mpg=mean(mpg),sd_mpg=sd(mpg)),by=list(gear,am)],
-    getDT(x) |> group_by(gear, am) |> summarise(mu_mpg=mean(mpg),sd_mpg=sd(mpg))
+    getDT(x) |> group_by(gear, am) |> summarise(mu_mpg=mean(mpg),sd_mpg=sd(mpg), .groups="drop")
   )
 })
+result_wr_summarize_rows
 purrr::map(result_wr_summarize_rows, boxplot)
+
 ```
 
 ```{r wr_summarize_cols}
@@ -80,7 +82,7 @@ result_wr_summarize_cols <- purrr::map(manyCols, function(x){
   microbenchmark::microbenchmark(
     wr_groupby(getDT(x), gear, am) |> wr_summarize(mu_mpg=mean(mpg),sd_mpg=sd(mpg)),
     getDT(x)[,.(mu_mpg=mean(mpg),sd_mpg=sd(mpg)),by=list(gear,am)],
-    getDT(x) |> group_by(gear, am) |> summarise(mu_mpg=mean(mpg),sd_mpg=sd(mpg))
+    getDT(x) |> group_by(gear, am) |> summarise(mu_mpg=mean(mpg),sd_mpg=sd(mpg), .groups="drop")
   )
 })
 result_wr_summarize_cols
