@@ -1,7 +1,6 @@
 
 # wr.data.table
-<!-- badges: start --> [![Build
-Status](https://app.travis-ci.com/kleu046/wr.data.table.svg?token=zXCbCkvh7MhXzkjbdY8t&branch=master)](https://app.travis-ci.com/kleu046/wr.data.table)
+<!-- badges: start --> [![BuildStatus](https://app.travis-ci.com/kleu046/wr.data.table.svg?token=zXCbCkvh7MhXzkjbdY8t&branch=master)](https://app.travis-ci.com/kleu046/wr.data.table)
 [![R-CMD-check](https://github.com/kleu046/wr.data.table/workflows/R-CMD-check/badge.svg)](https://github.com/kleu046/wr.data.table/actions)
 <!-- badges: end -->
 This project is started as a self-training and self-learning example for build R
