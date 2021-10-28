@@ -1,4 +1,17 @@
-#' importFrom data.table setnames
+#' Setting column names
+#' @description using data.table packages setnames function to change column
+#'   names
+#' @usage wr_renameCols(dt, old=NULL, new=NULL, ...)
+#' @details User can use provide a vector of characters for current column names
+#'   and a vector of characters of equal lengths as new column names.
+#'   Alternatively, user can also use the old_column_name=new_column_name
+#'   notation, separated by comma.
+#' @examples
+#' /dontrun{
+#' wr_renameCols(dt, hp=horsepower, disp=displacement)
+#' wr_renameCols(dt, old=c("hp", "disp", "cyl"), new=c("horsepower", "displacement", "cylinder"))
+#' }
+#' @importFrom data.table setnames
 #' @export
 wr_renameCols <- function(dt, old=NULL, new=NULL, ...){
   if (is.null(old) & is.null(new)) {
