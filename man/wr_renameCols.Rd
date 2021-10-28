@@ -6,6 +6,16 @@
 \usage{
 wr_renameCols(dt, old=NULL, new=NULL, ...)
 }
+\arguments{
+\item{dt}{input data.table}
+
+\item{old}{default = NULL vector of existing column names}
+
+\item{new}{default = NULL vector of new column names}
+
+\item{...}{non-standard evaluation of in the form of an expression such as,
+old_column_name = new_column_name}
+}
 \description{
 using data.table packages setnames function to change column
 names
@@ -17,7 +27,7 @@ Alternatively, user can also use the old_column_name=new_column_name
 notation, separated by comma.
 }
 \examples{
-/dontrun{
+\dontrun{
 wr_renameCols(dt, hp=horsepower, disp=displacement)
 wr_renameCols(dt, old=c("hp", "disp", "cyl"), new=c("horsepower", "displacement", "cylinder"))
 }
