@@ -23,5 +23,5 @@
 wr_filter <- function(dt, condition) {
   condition_call <- substitute(condition)
   r <- eval(condition_call, dt, enclos=parent.frame())
-  copy(dt)[r,]
+  dt[r,]
 }

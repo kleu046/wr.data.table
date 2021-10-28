@@ -30,6 +30,6 @@ wr_assigncols <- function(dt, ...) {
   dots <- paste(
     paste(names(dots[-1]),dots[-1], sep="="),
     collapse=",")
-  callAsString <- paste0("copy(dt)[,`:=`(",dots,")]")
+  callAsString <- paste0("dt[,`:=`(",dots,")]")
   eval(parse(text=callAsString))
 }

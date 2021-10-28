@@ -23,6 +23,6 @@ wr_order <- function(dt, ...) {
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 
   args <- substitute(list(...))
-  eval(call("setorder",copy(dt), args[-1]))
+  eval(call("setorder",dt, args[-1]))
 
 }

@@ -23,7 +23,7 @@ wr_deselect <- function(dt, ...) {
       paste0(x[2], ":", x[3])
   })
   cols <- c(
-    sapply(argsAsStringIsRange, function(x) {expand_colnames(dt, x)}) %>% unlist(),
+    sapply(argsAsStringIsRange, function(x) {expand_colnames(dt, x)}) |> unlist(),
     argsAsString[!isRange] %>% unlist())
 
   dt[,!c(cols),with=F]
