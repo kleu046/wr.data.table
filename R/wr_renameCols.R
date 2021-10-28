@@ -12,7 +12,7 @@
 #'   Alternatively, user can also use the old_column_name=new_column_name
 #'   notation, separated by comma.
 #' @examples
-#' /dontrun{
+#' \dontrun{
 #' wr_renameCols(dt, hp=horsepower, disp=displacement)
 #' wr_renameCols(dt, old=c("hp", "disp", "cyl"), new=c("horsepower", "displacement", "cylinder"))
 #' }
