@@ -3,7 +3,7 @@
 export(mkdt)
 export(wr_assigncols)
 export(wr_deselect)
-export(wr_dt_withrownames)
+export(wr_dt_keeprownames)
 export(wr_filter)
 export(wr_groupby)
 export(wr_order)

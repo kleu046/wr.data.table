@@ -15,14 +15,14 @@ library(dplyr)
 ```{r generate_data, include=FALSE}
 dt <- data.table(mtcars)
 
-wr_dt_withrownames <- function(dt, n) {
+wr_dt_keeprownames <- function(dt, n) {
   for (i in 1:n) {
     dt <- rbind(dt, dt)
   }
   data.table(dt)
 }
 
-manyRows <- lapply(c(2,5,10),function(x){wr_dt_withrownames(dt, x)})
+manyRows <- lapply(c(2,5,10),function(x){wr_dt_keeprownames(dt, x)})
 #str(manyRows)
 
 
