@@ -3,7 +3,7 @@
 #'
 #' For more information about \code{data.table} and \code{setorder()} \href{http://www.google.com}{Google it}.
 #'
-#' @usage wr_assigncols(dt, ...)
+#' @usage wr_setcols(dt, ...)
 #'
 #' @param dt a \code{data.table}
 #' @param ... expression setting up a new column.  E.g. kmpl = mpg / 2.35215.
@@ -16,12 +16,12 @@
 #' @examples
 #' \dontrun{
   #' dt <- data.table(mtcars)
-  #' wr_assigncols(dt, kmpl = mpg / 2.35215, wt_in_kg = wt / 2.20462)
+  #' wr_setcols(dt, kmpl = mpg / 2.35215, wt_in_kg = wt / 2.20462)
   #' # creating two columns / converted units
-  #' wr_assigncols(dt, am = NULL) # remove a column
+  #' wr_setcols(dt, am = NULL) # remove a column
 #' }
 #' @export
-wr_assigncols <- function(dt, ...) {
+wr_setcols <- function(dt, ...) {
   # dots = named list of ...
   # names = names for new columns
   # values in list = values for assignment
