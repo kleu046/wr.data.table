@@ -35,7 +35,9 @@ This function converts a data.frame into a data.table and use the row names as t
 
 This is equivalent to:
 
-> data.table(df, keep.rownames = True)
+```{r}
+data.table(df, keep.rownames = True)
+```
 
 ```{r}
 dt <- wr_dt_withrownames(data1)
