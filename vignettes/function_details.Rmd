@@ -29,15 +29,17 @@ This package aims to provide *wrapper functions* to carry out common tasks using
 
 This vignette outlines detail usages for these wrapper function
 
-## data.table.withRownames()
+## wr_dt_withrownames()
+
+data.table(dt) removes row names.
 
 This function converts a data.frame into a data.table and use the row names as the first column.
 
-This is equivalent to:
+To use row names as the first column, user must use data.table(df, keep.rownames = True)
 
-```{r}
-data.table(df, keep.rownames = True)
-```
+where df is a data.frame object
+
+data.table.withRownames(df) will keep the row names as the first column of the data.table
 
 ```{r}
 dt <- wr_dt_withrownames(data1)
