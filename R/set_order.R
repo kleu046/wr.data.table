@@ -3,7 +3,7 @@
 #'
 #' For more information about \code{data.table} and \code{setorder()} \href{http://www.google.com}{Google it}.
 #'
-#' @usage wr_order(dt, ...)
+#' @usage set_order(dt, ...)
 #'
 #' @param dt a \code{data.table}
 #' @param ... column names.  Multiple column names are allowed.
@@ -16,10 +16,10 @@
 #' @examples
 #' \dontrun{
 #'   dt <- data.table(mtcars)
-#'   wr_order(dt, gear, am, vs)
+#'   set_order(dt, gear, am, vs)
 #' }
 #' @export
-wr_order <- function(dt, ...) {
+set_order <- function(dt, ...) {
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 
   args <- substitute(list(...))

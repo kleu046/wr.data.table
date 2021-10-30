@@ -2,12 +2,12 @@
 #'
 #' @description this function simply removes the $group in the \code{data.table} attributes
 #'
-#' @usage wr_ungroup(dt)
+#' @usage rm_group(dt)
 #'
 #' @param dt a \code{data.table}
 #'
 #' @export
-wr_ungroup <- function(dt) {
+rm_group <- function(dt) {
   attributes(dt)$group <- NULL
   dt
 }

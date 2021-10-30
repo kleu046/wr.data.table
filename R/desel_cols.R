@@ -2,7 +2,7 @@
 #'
 #' @description This function is similar to
 #'
-#' @usage wr_deselect(dt, ...)
+#' @usage desel_cols(dt, ...)
 #'
 #' @param dt a \code{data.table}
 #' @param ... some parameters
@@ -10,7 +10,7 @@
 #' @import data.table
 #'
 #' @export
-wr_deselect <- function(dt, ...) {
+desel_cols <- function(dt, ...) {
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 
   args <- (substitute(list(...)))
@@ -26,5 +26,5 @@ wr_deselect <- function(dt, ...) {
     sapply(argsAsStringIsRange, function(x) {expand_colnames(dt, x)}) |> unlist(),
     argsAsString[!isRange] |> unlist())
 
-  dt[,!c(cols),with=F]
+  copy(dt)[,!c(cols),with=F]
 }

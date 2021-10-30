@@ -3,7 +3,7 @@
 #' @description add $group attribute to data.table
 #' $group is a vector of variable anmes
 #'
-#' @usage wr_groupby(dt, ...)
+#' @usage set_group(dt, ...)
 #'
 #' @param dt a \code{data.table}
 #' @param ... names of variables that are used for grouping
@@ -11,7 +11,7 @@
 #' @import data.table
 #'
 #' @export
-wr_groupby <- function(dt, ...) {
+set_group <- function(dt, ...) {
 
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 

@@ -15,14 +15,14 @@ library(dplyr)
 ```{r generate_data, include=FALSE}
 dt <- data.table(mtcars)
 
-wr_dt_keeprownames <- function(dt, n) {
+dt_keeprownames <- function(dt, n) {
   for (i in 1:n) {
     dt <- rbind(dt, dt)
   }
   data.table(dt)
 }
 
-manyRows <- lapply(c(2,5,10),function(x){wr_dt_keeprownames(dt, x)})
+manyRows <- lapply(c(2,5,10),function(x){dt_keeprownames(dt, x)})
 #str(manyRows)
 
 
@@ -41,61 +41,61 @@ getDT <- function(x) {
 }
 ```
 
-```{r wr_order_rows}
-# wr_order
-result_wr_order_rows <- purrr::map(manyRows, function(x) {
+```{r set_order_rows}
+# set_order
+result_set_order_rows <- purrr::map(manyRows, function(x) {
   microbenchmark::microbenchmark(
-    wr_order(getDT(x), am, vs),
+    set_order(getDT(x), am, vs),
     setorder(getDT(x),am,vs),
     getDT(x) |> arrange(am, vs))
 })
-#result_wr_order_rows
-purrr::map(result_wr_order_rows, boxplot)
+#result_set_order_rows
+purrr::map(result_set_order_rows, boxplot)
 ```
 
-```{r wr_order_cols}
-result_wr_order_cols <- purrr::map(manyCols, function(x) {
+```{r set_order_cols}
+result_set_order_cols <- purrr::map(manyCols, function(x) {
   microbenchmark::microbenchmark(
-    wr_order(getDT(x), am, vs),
+    set_order(getDT(x), am, vs),
     setorder(getDT(x),am,vs),
     getDT(x) |> dplyr::arrange(am, vs))
 })
-#result_wr_order_cols
-purrr::map(result_wr_order_cols, boxplot)
+#result_set_order_cols
+purrr::map(result_set_order_cols, boxplot)
 ```
 
-```{r wr_summarize_rows}
-result_wr_summarize_rows <- purrr::map(manyRows, function(x){
+```{r condense_rows}
+result_condense_rows <- purrr::map(manyRows, function(x){
   microbenchmark::microbenchmark(
-    wr_groupby(getDT(x), gear, am) |> wr_summarize(mu_mpg=mean(mpg),sd_mpg=sd(mpg)),
+    set_group(getDT(x), gear, am) |> condense(mu_mpg=mean(mpg),sd_mpg=sd(mpg)),
     getDT(x)[,.(mu_mpg=mean(mpg),sd_mpg=sd(mpg)),by=list(gear,am)],
     getDT(x) |> group_by(gear, am) |> summarise(mu_mpg=mean(mpg),sd_mpg=sd(mpg), .groups="drop")
   )
 })
-result_wr_summarize_rows
-purrr::map(result_wr_summarize_rows, boxplot)
+result_condense_rows
+purrr::map(result_condense_rows, boxplot)
 ```
 
-```{r wr_summarize_cols}
-result_wr_summarize_cols <- purrr::map(manyCols, function(x){
+```{r condense_cols}
+result_condense_cols <- purrr::map(manyCols, function(x){
   microbenchmark::microbenchmark(
-    wr_groupby(getDT(x), gear, am) |> wr_summarize(mu_mpg=mean(mpg),sd_mpg=sd(mpg)),
+    set_group(getDT(x), gear, am) |> condense(mu_mpg=mean(mpg),sd_mpg=sd(mpg)),
     getDT(x)[,.(mu_mpg=mean(mpg),sd_mpg=sd(mpg)),by=list(gear,am)],
     getDT(x) |> group_by(gear, am) |> summarise(mu_mpg=mean(mpg),sd_mpg=sd(mpg), .groups="drop")
   )
 })
-result_wr_summarize_cols
-purrr::map(result_wr_summarize_cols, boxplot)
+result_condense_cols
+purrr::map(result_condense_cols, boxplot)
 ```
 
-```{r wr_summarize_cols}
-result_wr_summarize_cols <- purrr::map(manyCols, function(x){
+```{r condense_cols}
+result_condense_cols <- purrr::map(manyCols, function(x){
   microbenchmark::microbenchmark(
-    wr_groupby(getDT(x), gear, am) |> wr_summarize(mu_mpg=mean(mpg),sd_mpg=sd(mpg)),
+    set_group(getDT(x), gear, am) |> condense(mu_mpg=mean(mpg),sd_mpg=sd(mpg)),
     getDT(x)[,.(mu_mpg=mean(mpg),sd_mpg=sd(mpg)),by=list(gear,am)],
     getDT(x) |> group_by(gear, am) |> summarise(mu_mpg=mean(mpg),sd_mpg=sd(mpg), .groups="drop")
   )
 })
-result_wr_summarize_cols
-purrr::map(result_wr_summarize_cols, boxplot)
+result_condense_cols
+purrr::map(result_condense_cols, boxplot)
 ```

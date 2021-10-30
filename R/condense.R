@@ -3,7 +3,7 @@
 #'
 #' For more information about \code{data.table} and \code{setorder()} \href{http://www.google.com}{Google it}.
 #'
-#' @usage wr_summarize(dt, ...)
+#' @usage condense(dt, ...)
 #'
 #' @param dt a \code{data.table}
 #' @param ... some parameters
@@ -17,12 +17,12 @@
 #'   dt <- data.table(mtcars)
 #' }
 #' @export
-wr_summarize <- function(dt, ...) {
+condense <- function(dt, ...) {
 
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 
   args <- substitute(list(...))
 
-  dt[,eval(args), by=eval(attributes(dt)$group)]
+  copy(dt)[,eval(args), by=eval(attributes(dt)$group)]
 
 }

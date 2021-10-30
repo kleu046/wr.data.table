@@ -1,7 +1,7 @@
 #' Setting column names
 #' @description using data.table packages setnames function to change column
 #'   names
-#' @usage wr_rncols(dt, old=NULL, new=NULL, ...)
+#' @usage rn_cols(dt, old=NULL, new=NULL, ...)
 #' @param dt input data.table
 #' @param old default = NULL vector of existing column names
 #' @param new default = NULL vector of new column names
@@ -13,12 +13,13 @@
 #'   notation, separated by comma.
 #' @examples
 #' \dontrun{
-#' wr_rncols(dt, hp=horsepower, disp=displacement)
-#' wr_rncols(dt, old=c("hp", "disp", "cyl"), new=c("horsepower", "displacement", "cylinder"))
+#' rn_cols(dt, hp=horsepower, disp=displacement)
+#' rn_cols(dt, old=c("hp", "disp", "cyl"), new=c("horsepower", "displacement", "cylinder"))
 #' }
 #' @importFrom data.table setnames
 #' @export
-wr_rncols <- function(dt, old=NULL, new=NULL, ...){
+rn_cols <- function(dt, old=NULL, new=NULL, ...){
+
   if (is.null(old) & is.null(new)) {
     dots <- substitute(list(...))
     col_names <- names(dots)

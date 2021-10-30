@@ -3,7 +3,7 @@
 #'
 #' For more information about \code{data.table} and \code{data.frame} \href{http://www.google.com}{Google it}.
 #'
-#' @usage wr_dt_keeprownames(df, check.names=FALSE, key = NULL, stringsAsFactors = FALSE)
+#' @usage dt_keeprownames(df, check.names=FALSE, key = NULL, stringsAsFactors = FALSE)
 #'
 #' @param df a \code{data.frame}
 #' @param check.names same as in data.frame
@@ -15,19 +15,19 @@
 #' @import data.table
 #'
 #' @examples
-#' wr_dt_keeprownames(mtcars)
+#' dt_keeprownames(mtcars)
 #'
 #' \dontrun{
-  #' wr_dt_keeprownames(data.table(mtcars)) # this will throw an error because input is not a data.frame
+  #' dt_keeprownames(data.table(mtcars)) # this will throw an error because input is not a data.frame
   #' df <- mtcars
   #' rownames(df) <- NULL
-  #' wr_dt_keeprownames(df)
+  #' dt_keeprownames(df)
   #' # if data.frame has no row names, the returned data.table will create column rn
   #' with row index numbers
 #' }
 #'
-#' @export wr_dt_keeprownames
-wr_dt_keeprownames <- function(df, check.names=FALSE, key = NULL, stringsAsFactors = FALSE) {
+#' @export dt_keeprownames
+dt_keeprownames <- function(df, check.names=FALSE, key = NULL, stringsAsFactors = FALSE) {
   stopifnot("Input must be a data.frame" = class(df) == "data.frame")
 
   data.table(rn = rownames(df), df, check.names = check.names, key = key, stringsAsFactors = stringsAsFactors)

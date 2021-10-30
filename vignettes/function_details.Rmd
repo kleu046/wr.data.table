@@ -29,7 +29,7 @@ This package aims to provide *wrapper functions* to carry out common tasks using
 
 This vignette outlines detail usages for these wrapper function
 
-## wr_dt_keeprownames()
+## dt_keeprownames()
 
 data.table(dt) removes row names.
 
@@ -39,12 +39,12 @@ To use row names as the first column, user must use data.table(df, keep.rownames
 
 where df is a data.frame object
 
-wr_dt_keeprownames(df) will keep the row names as the first column of the data.table
+dt_keeprownames(df) will keep the row names as the first column of the data.table
 
 ```{r}
-dt <- wr_dt_keeprownames(data1)
+dt <- dt_keeprownames(data1)
 
-dt |> wr_groupby(gear, vs) |> attributes()
+dt |> set_group(gear, vs) |> attributes()
 
-dt |> wr_groupby(gear, vs) |> wr_summarize(mu_mpg=mean(mpg), sd_mpg=sd(mpg), n=.N)
+dt |> set_group(gear, vs) |> condense(mu_mpg=mean(mpg), sd_mpg=sd(mpg), n=.N)
 ```
