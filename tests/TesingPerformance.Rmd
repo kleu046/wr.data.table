@@ -41,27 +41,25 @@ getDT <- function(x) {
 }
 ```
 
-```{r set_order_rows}
-# set_order
-result_set_order_rows <- purrr::map(manyRows, function(x) {
+```{r setorder_rows}
+# setorder
+result_setorder_rows <- purrr::map(manyRows, function(x) {
   microbenchmark::microbenchmark(
-    set_order(getDT(x), am, vs),
-    setorder(getDT(x),am,vs),
+    setorder(getDT(x), am, vs),
     getDT(x) |> arrange(am, vs))
 })
-#result_set_order_rows
-purrr::map(result_set_order_rows, boxplot)
+#result_setorder_rows
+purrr::map(result_setorder_rows, boxplot)
 ```
 
-```{r set_order_cols}
-result_set_order_cols <- purrr::map(manyCols, function(x) {
+```{r setorder_cols}
+result_setorder_cols <- purrr::map(manyCols, function(x) {
   microbenchmark::microbenchmark(
-    set_order(getDT(x), am, vs),
-    setorder(getDT(x),am,vs),
+    setorder(getDT(x), am, vs),
     getDT(x) |> dplyr::arrange(am, vs))
 })
-#result_set_order_cols
-purrr::map(result_set_order_cols, boxplot)
+#result_setorder_cols
+purrr::map(result_setorder_cols, boxplot)
 ```
 
 ```{r condense_rows}
