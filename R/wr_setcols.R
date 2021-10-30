@@ -27,9 +27,20 @@ wr_setcols <- function(dt, ...) {
   # values in list = values for assignment
 
   dots <- substitute(list(...))
+
+  has_quote <- c()
+  for (i in 2:length(dots)){
+    deparse_expr <- deparse(dots[i])
+    has_quote <- c(has_quote, grepl("^`.*`()", deparse_expr))
+  }
+
+  out <- ifelse(has_quote, paste0("`", dots[-1], "`"), paste0(dots[-1]))
+
   dots <- paste(
-    paste(names(dots[-1]),dots[-1], sep="="),
+    paste(paste0("`",names(dots[-1]),"`"),
+          out,
+          sep="="),
     collapse=",")
-  callAsString <- paste0("copy(dt)[,`:=`(",dots,")]")
+  callAsString <- paste0("dt[,`:=`(",dots,")]")
   eval(parse(text=callAsString))
 }
