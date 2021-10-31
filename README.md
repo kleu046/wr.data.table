@@ -4,6 +4,7 @@
 [![BuildStatus](https://app.travis-ci.com/kleu046/wr.data.table.svg?token=zXCbCkvh7MhXzkjbdY8t&branch=master)](https://app.travis-ci.com/kleu046/wr.data.table)
 [![R-CMD-check](https://github.com/kleu046/wr.data.table/workflows/R-CMD-check/badge.svg)](https://github.com/kleu046/wr.data.table/actions)
 <!-- badges: end -->
+
 This project is started as a self-training and self-learning example for build R
 packages following the teachings on a very well structure and practical course
 "Build an R package" provided by John Hopkins University on Coursera.org.
@@ -20,6 +21,12 @@ imitate the style and piping workflow as those in tidyverse.  With piping in
 mind, the wrapper functions in the package will always producce an output copy
 of the input data.table.  Unlike some functions/operations in data.table, which
 does change the original data.table.
+
+## License
+This project is free, open-sourced and licensed under MPL 2.0 The wrapper
+functions written in this package depends upon the data.table package which is
+available at https://github.com/Rdatatable/data.table.git
+
 ## Installation
 You can install the released version of wr.data.table from
 [CRAN](https://CRAN.R-project.org) with:
@@ -28,6 +35,7 @@ The package can be downloaded as a zip file on
 https://github.com/kleu046/wr.data.table.git
 Use install.packages(file.choose(), repos=NULL, type="source") to install with
 the zip file ``` r install.packages("wr.data.table") ```
+
 ## Example
 This is a basic example which shows you how to solve a common problem:
 ``` r library(wr.data.table) ## basic example code ```
