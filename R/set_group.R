@@ -21,12 +21,19 @@ set_group <- function(dt, ...) {
 
   # find columns in range
   rangeAsString <- argsAsString[isRange]
-  expandedRangeAsString <- lapply(rangeAsString, function(x) {expand_colnames(dt, x)})
+  expandedRangeAsString <- sapply(rangeAsString, function(x) {expand_colnames(dt, x)})
 
   # find individual columns
   colAsString <- argsAsString[!isRange]
 
-  combinedColsAsString <- unique(c(unlist(expandedRangeAsString), unlist(colAsString)))
+  # find column names that has quotes
+  hasQuote <- grepl("^`.*`$", colAsString)
+
+  colAsStringHasQuote <- gsub("`", "", colAsString[hasQuote])
+
+  colAsStringNoQuote <- colAsString[!hasQuote]
+
+  combinedColsAsString <- unique(c(unlist(expandedRangeAsString), unlist(colAsStringHasQuote), unlist(colAsStringNoQuote)))
 
   # combine
   if(!all(combinedColsAsString %in% colnames(dt))) {

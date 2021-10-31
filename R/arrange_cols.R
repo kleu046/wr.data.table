@@ -1,0 +1,59 @@
+#' Arrange columns
+#' @description This wrapper function make use of the setcolorder() function and
+#'   arrange columns by place selected columns after the specified position.
+#' @usage arrange_cols(dt, at, ...)
+#' @param dt input data.table
+#' @param at position for inserting the selected columns.  This can be any valid
+#'   column names or "start" or "end" for placing the selected column before the
+#'   first column or after the last column
+#' @param ... a vector of characters of column names or column names seperated by commas (NSE)
+#' @importFrom data.table setcolorder
+#' @export
+arrange_cols <- function(dt, at, ...) {
+  if(is.symbol(substitute(at))) {
+    at <- paste0(substitute(at))
+  }
+  stopifnot("at number be a valid column name, \"start\" or \"end\"" = at %in% colnames(dt)|(at=="start")|(at == "end"))
+
+  dots <- NULL
+  try({
+    dots <- eval(substitute(...))
+  }, silent = TRUE)
+  if (is.null(dots)) {
+    dots <- as.character(as.list(match.call()))
+    dots <- dots[4:length(dots)]
+
+  }
+
+  # expand range of column names
+  if (any(grepl(":", dots))) {
+    extract_cols <- NULL
+    for (i in 1:length(dots)) {
+      if(grepl(":", dots[i])) {
+        expanded <- expand_colnames(dt, dots[i])
+        extract_cols <- c(extract_cols, expanded)
+      } else {
+        extract_cols <- c(extract_cols, dots[i])
+      }
+    }
+  } else {
+    extract_cols <- dots
+  }
+
+  all_cols <- colnames(dt)
+  remain_cols <- all_cols[!grepl(paste0(extract_cols,collapse="|"), all_cols)]
+
+  if(at == "start") {
+    colorder <- c(extract_cols, remain_cols)
+  } else if (at == "end") {
+    colorder <- c(remain_cols, extract_cols)
+  } else {
+    insert_index <- grep(at, remain_cols)
+    if (insert_index == length(remain_cols)) {
+      colorder <- c(remain_cols, extract_cols)
+    } else {
+      colorder <- c(remain_cols[1:insert_index], extract_cols, remain_cols[(insert_index+1):length(remain_cols)])
+    }
+  }
+  setcolorder(copy(dt), colorder)
+}

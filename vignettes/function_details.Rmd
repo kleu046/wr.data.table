@@ -41,10 +41,78 @@ where df is a data.frame object
 
 dt_keeprownames(df) will keep the row names as the first column of the data.table
 
-```{r}
+
+```{r keeprownames}
 dt <- dt_keeprownames(data1)
-
-dt |> set_group(gear, vs) |> attributes()
-
-dt |> set_group(gear, vs) |> condense(mu_mpg=mean(mpg), sd_mpg=sd(mpg), n=.N)
+dt
 ```
+
+## Selecting (sel_cols, desel_cols) and renaming columns (rn_cols)
+
+User can rename columns of the data.table using rn_cols().  Note that rn_cols() function renames the original data.table therefore assigning the output back to dt is not necessary.  The function does provide the data.table as output so that user can use this function in piping.
+
+```{r rename_rn_column}
+dt |> rn_cols(rn = `vehicle model`)
+dt
+```
+
+User can select colummns using sel_cols()
+
+```{r select_columns}
+subset <- dt |> sel_cols(`vehicle model`, mpg, vs, gear)
+subset
+```
+
+Instead of selecting columns, user can also choose to deselect certain columns.
+
+```{r deselect_columns}
+(dt |> desel_cols(gear, vs, am, drat, carb, qsec))
+```
+
+## Filtering data using filter_rows()
+
+User can use expressions and grepl() in filter_rows() function to filter and subset the data in rows.
+
+```{r}
+dt |> filter_rows(mpg >= 20)
+
+dt |> filter_rows(grepl("^M", `vehicle model`))
+```
+
+## Summarizing data using set_group() and condense
+
+set_group() function adds a "group" attribute to the input data.table.
+
+When the condense() function is called, the group attribute is used as the "by" arugment in the data.table to summarize the data by group
+
+The example below calculates the mean and standard deviation of the data by groups of "gear" and "vs".  Note that .N notation used in data.table also works here
+
+```{r}
+subset |> set_group(`vehicle model`, gear, vs) |> attributes()
+
+subset |> set_group(`vehicle model`, gear, vs) |> condense(mu_mpg=round(mean(mpg),2), sd_mpg=round(sd(mpg),2), count=.N) |> rm_group()
+```
+
+## Creating new columns
+
+User can def new columns using the def_cols() function
+
+For example, user can create an index column followed by using the arrange_cols() function to place the index column at the front of the data.table
+
+```{r}
+subset1 <- subset |> def_cols(index = .I) |> arrange_cols(at="start", index)
+subset1
+```
+
+```{r}
+# arrange_cols
+new_dt <- arrange_cols(dt, at=`vehicle model`, qsec, vs, am)
+new_dt
+new_dt <- arrange_cols(dt, at="start", c("qsec", "vs", "am"))
+new_dt
+new_dt <- arrange_cols(dt, at="mpg", qsec:am, carb)
+new_dt
+new_dt <- arrange_cols(dt, at="start", qsec:am, mpg)
+new_dt
+```
+
