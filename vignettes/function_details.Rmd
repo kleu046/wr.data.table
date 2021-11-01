@@ -59,7 +59,7 @@ dt
 User can select colummns using sel_cols()
 
 ```{r select_columns}
-subset <- dt |> sel_cols(`vehicle model`, mpg, vs, gear)
+subset <- dt |> sel_cols(`vehicle model`, mpg:hp, gear, vs)
 subset
 ```
 

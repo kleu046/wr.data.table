@@ -1,11 +1,16 @@
 #' Function to subset data.table by selecting columns/variables
 #'
-#' @description This function is similar to
+#' @description This is a wrapper function to select columns in a data.table
 #'
 #' @usage sel_cols(dt, ...)
 #'
-#' @param dt a \code{data.table}
-#' @param ... some parameters
+#' @param dt input data.table
+#' @param ... vector of characters of column names, column names separated by
+#'   commas or range given with ":" notation
+#'
+#' @details The function creates a copy as data.table would by default.  Columns
+#'   will appear in the output data.table in the order that they are given in
+#'   "...". Repeat column names are removed.
 #'
 #' @import data.table
 #'
@@ -13,20 +18,18 @@
 sel_cols <- function(dt, ...) {
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 
-  args <- (substitute(list(...)))
+  dots <- as.character(substitute(list(...)))
+  dots <- dots[2:length(dots)]
 
-  argsAsString <- lapply(args[-1], as.character)
+  cols <- NULL
+  for (i in 1:length(dots)) {
 
-  isRange <- grepl(":", argsAsString)
+    if (grepl(":", dots[i])) {
+      cols <- c(cols, expand_colnames(dt, dots[i]))
+    } else {
+      cols <- c(cols, gsub("`", "", dots[i]))
+    }
+  }
 
-  argsAsStringIsRange <- lapply(argsAsString[isRange], function(x){
-      paste0(x[2], ":", x[3])
-  })
-  cols <- c(
-    sapply(argsAsStringIsRange, function(x) {expand_colnames(dt, x)}) |> unlist(),
-    argsAsString[!isRange] |> unlist())
-
-  # a copy of dt is created with the selected columns
-  # no need to use copy()
-  dt[,c(cols),with=F]
+  dt[,c(unique(cols)),with=F]
 }

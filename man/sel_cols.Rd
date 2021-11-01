@@ -7,10 +7,16 @@
 sel_cols(dt, ...)
 }
 \arguments{
-\item{dt}{a \code{data.table}}
+\item{dt}{input data.table}
 
-\item{...}{some parameters}
+\item{...}{vector of characters of column names, column names separated by
+commas or range given with ":" notation}
 }
 \description{
-This function is similar to
+This is a wrapper function to select columns in a data.table
+}
+\details{
+The function creates a copy as data.table would by default.  Columns
+will appear in the output data.table in the order that they are given in
+"...". Repeat column names are removed.
 }

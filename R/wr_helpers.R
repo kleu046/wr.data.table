@@ -26,8 +26,8 @@ expand_colnames <- function(dt, range) {
 
   brackets <- unlist(strsplit(range, ":"))
   vars <- colnames(dt)
-  start_index <- grep(brackets[[1]], vars)
-  end_index <- grep(brackets[[2]], vars)
+  start_index <- grep(gsub("`", "", brackets[[1]]), vars)
+  end_index <- grep(gsub("`", "", brackets[[2]]), vars)
   vars[start_index:end_index]
 }
 

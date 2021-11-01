@@ -3,10 +3,10 @@ test_that("sel_cols is working", {
   expect_s3_class(sel_cols(dt, mpg), "data.table")
 
   expect_equal(colnames(sel_cols(dt, vs, mpg:hp, am)),
-                   c("mpg", "cyl", "disp", "hp", "vs", "am"))
+                   c("vs", "mpg", "cyl", "disp", "hp", "am"))
 
   expect_identical(ncol(sel_cols(dt, vs, mpg:hp, am, gear:carb )),
-                   ncol(dt[,.(mpg,cyl,disp,hp,vs,am,gear,carb)]))
+                   ncol(dt[,.(vs, mpg,cyl,disp,hp,am,gear,carb)]))
 
   expect_error(sel_cols(dt, mpg, wrong_col_name, mpg:hp))
 
