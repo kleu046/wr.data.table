@@ -104,15 +104,9 @@ subset1 <- subset |> def_cols(index = .I) |> arrange_cols(at="start", index)
 subset1
 ```
 
-```{r}
-# arrange_cols
-new_dt <- arrange_cols(dt, at=`vehicle model`, qsec, vs, am)
-new_dt
-new_dt <- arrange_cols(dt, at="start", c("qsec", "vs", "am"))
-new_dt
-new_dt <- arrange_cols(dt, at="mpg", qsec:am, carb)
-new_dt
-new_dt <- arrange_cols(dt, at="start", qsec:am, mpg)
-new_dt
-```
+User can create new columns from existing columns, for example,
 
+```{r}
+subset2 <- subset1 |> def_cols(kpL = mpg * 0.425144, vs = ifelse(vs==0, "V-shaped", "Straight")) |> arrange_cols(at=mpg, kpL)
+subset2
+```
