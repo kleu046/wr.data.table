@@ -10,12 +10,21 @@ arrange_cols(dt, at, ...)
 \item{dt}{input data.table}
 
 \item{at}{position for inserting the selected columns.  This can be any valid
-column names or "start" or "end" for placing the selected column before the
-first column or after the last column}
+column names, which will place the selected columns after the "at" column.
+Alternatively use "start" or "end" for placing the selected columns before
+the first column or after the last column respectively}
 
-\item{...}{a vector of characters of column names or column names seperated by commas (NSE)}
+\item{...}{a vector of characters of column names or column names seperated
+by commas (NSE)}
 }
 \description{
 This wrapper function make use of the setcolorder() function and
-arrange columns by place selected columns after the specified position.
+arrange columns by placing selected columns after the specified position.
+}
+\examples{
+\dontrun{
+arrange_cols(dt, at=`vehicle model`, qsec, vs, am)
+arrange_cols(dt, at="start", c("qsec", "vs", "am"))
+arrange_cols(dt, at="mpg", qsec:am, carb)
+}
 }
