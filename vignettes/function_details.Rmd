@@ -113,5 +113,5 @@ subset2
 ## Joining data.table
 
 ```{r}
-
+mkdt()
 ```
