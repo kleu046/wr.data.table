@@ -113,7 +113,6 @@ subset2
 ## Joining data.table
 
 ```{r}
-<<<<<<< HEAD
 subset2 <- subset2 |> data.table::setkey(index)
 data.table::key(subset2)
 
@@ -121,7 +120,4 @@ subset3 <- dt |> def_cols(index = .I) |> filter_rows(mpg > 18) |> sel_cols(index
 subset3
 
 subset2[subset3]
-=======
-mkdt()
->>>>>>> c006890c5aa24e4641c8e153a32d50e9db0aa7b5
 ```
