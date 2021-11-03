@@ -85,7 +85,7 @@ set_group() function adds a "group" attribute to the input data.table.
 
 When the condense() function is called, the group attribute is used as the "by" arugment in the data.table to summarize the data by group
 
-The example below calculates the mean and standard deviation of the data by groups of "gear" and "vs".  Note that .N notation used in data.table also works here
+The example below calculates the mean and standard deviation of the data by groups of "gear" and "vs".  Note that .I notation used in data.table also works here
 
 ```{r}
 subset |> set_group(`vehicle model`, gear, vs) |> attributes()
@@ -113,5 +113,11 @@ subset2
 ## Joining data.table
 
 ```{r}
+subset2 <- subset2 |> data.table::setkey(index)
+data.table::key(subset2)
 
+subset3 <- dt |> def_cols(index = .I) |> filter_rows(mpg > 18) |> sel_cols(index, `vehicle model`, drat, am, carb) |> data.table::setkey(index)
+subset3
+
+subset2[subset3]
 ```
