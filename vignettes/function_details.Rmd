@@ -110,3 +110,8 @@ User can create new columns from existing columns, for example,
 subset2 <- subset1 |> def_cols(kpL = mpg * 0.425144, vs = ifelse(vs==0, "V-shaped", "Straight")) |> arrange_cols(at=mpg, kpL)
 subset2
 ```
+## Joining data.table
+
+```{r}
+
+```
