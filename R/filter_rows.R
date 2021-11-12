@@ -22,6 +22,9 @@
 #' @export
 filter_rows <- function(dt, condition) {
   condition_call <- substitute(condition)
-  r <- eval(condition_call, dt, enclos=parent.frame())
-  copy(dt)[r,]
+  if (!is.null(attributes(dt)$group)) {
+    copy(dt)[,.SD[eval(condition_call, .SD),], by=eval(attributes(dt)$group)]
+  } else {
+    copy(dt)[eval(condition_call, dt, enclos=parent.frame()), ]
+  }
 }

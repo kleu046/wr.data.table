@@ -110,14 +110,22 @@ User can create new columns from existing columns, for example,
 subset2 <- subset1 |> def_cols(kpL = mpg * 0.425144, vs = ifelse(vs==0, "V-shaped", "Straight")) |> arrange_cols(at=mpg, kpL)
 subset2
 ```
-## Joining data.table
+```{r}
+spread <- function(dt, formula, value) {
+  data.table::dcast(dt, eval(substitute(formula)), value.var = paste0(substitute(value)))
+}
+spread(subset2, index + `vehicle model` + cyl + disp ~ vs, kpL)
+```
 
 ```{r}
-subset2 <- subset2 |> data.table::setkey(index)
-data.table::key(subset2)
+arrange_rows <- function(dt, ...) {
+  dots <- substitute(list(...))
+  if (!is.null(attributes(dt)$group)) {
+    copy(dt)[,.SD[order(eval(dots,.SD)),],by=eval(attributes(dt)$group)]
+  } else {
+    copy(dt)[order(eval(dots,dt)),]
+  }
+}
 
-subset3 <- dt |> def_cols(index = .I) |> filter_rows(mpg > 18) |> sel_cols(index, `vehicle model`, drat, am, carb) |> data.table::setkey(index)
-subset3
-
-subset2[subset3]
+dt |> set_group(cyl) |> arrange_rows(vs, am)
 ```
