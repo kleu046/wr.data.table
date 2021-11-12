@@ -111,21 +111,36 @@ subset2 <- subset1 |> def_cols(kpL = mpg * 0.425144, vs = ifelse(vs==0, "V-shape
 subset2
 ```
 ```{r}
+# is there a more intuitive way to use spread and gather?
 spread <- function(dt, formula, value) {
   data.table::dcast(dt, eval(substitute(formula)), value.var = paste0(substitute(value)))
 }
 spread(subset2, index + `vehicle model` + cyl + disp ~ vs, kpL)
-```
 
-```{r}
-arrange_rows <- function(dt, ...) {
-  dots <- substitute(list(...))
-  if (!is.null(attributes(dt)$group)) {
-    copy(dt)[,.SD[order(eval(dots,.SD)),],by=eval(attributes(dt)$group)]
-  } else {
-    copy(dt)[order(eval(dots,dt)),]
-  }
+spread1 <- function(dt, key, value) {
+  key <- deparse(substitute(key))
+  value <- deparse(substitute(value))
+  SDcols <- paste0("`",colnames(dt),"`")
+  SDcols <- SDcols[c(-grep(key, SDcols),-grep(value, SDcols))]
+  SDcols <- paste(paste(SDcols, collapse="+"))
+  SDcols
 }
 
-dt |> set_group(cyl) |> arrange_rows(vs, am)
+spread1(subset2, vs, kpL)
+```
+
+## Arranging data in rows
+
+User can arrange data in ascending or descending order according to the values in a chosen row.
+
+Multiple variables can be used to sort data in rows.  The priority of sorting follows the order the variables are entered in the arugments.
+
+The ascend_rows or descend_rows functions works with set_groups function.  The grouping variables would be seperated and placed to the left-hand most columns of the data.table.
+
+```{r}
+dt |> ascend_rows(cyl, vs, am)
+dt |> descend_rows(cyl, vs, am)
+
+dt |> set_group(cyl) |> ascend_rows(vs, am, gear)
+dt |> set_group(cyl) |> descend_rows(vs, am, gear)
 ```
