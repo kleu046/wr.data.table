@@ -28,8 +28,8 @@ arrange_cols <- function(dt, at, ...) {
     dots <- eval(substitute(...))
   }, silent = TRUE)
   if (is.null(dots)) {
-    dots <- as.character(as.list(match.call()))
-    dots <- dots[4:length(dots)]
+    dots <- as.character(substitute(list(...)))
+    dots <- dots[2:length(dots)]
 
   }
 

@@ -110,23 +110,10 @@ User can create new columns from existing columns, for example,
 subset2 <- subset1 |> def_cols(kpL = mpg * 0.425144, vs = ifelse(vs==0, "V-shaped", "Straight")) |> arrange_cols(at=mpg, kpL)
 subset2
 ```
+
+
 ```{r}
-# is there a more intuitive way to use spread and gather?
-spread <- function(dt, formula, value) {
-  data.table::dcast(dt, eval(substitute(formula)), value.var = paste0(substitute(value)))
-}
-spread(subset2, index + `vehicle model` + cyl + disp ~ vs, kpL)
-
-spread1 <- function(dt, key, value) {
-  key <- deparse(substitute(key))
-  value <- deparse(substitute(value))
-  SDcols <- paste0("`",colnames(dt),"`")
-  SDcols <- SDcols[c(-grep(key, SDcols),-grep(value, SDcols))]
-  SDcols <- paste(paste(SDcols, collapse="+"))
-  SDcols
-}
-
-spread1(subset2, vs, kpL)
+spread(subset2, key = vs, value = kpL)
 ```
 
 ## Arranging data in rows
@@ -138,9 +125,22 @@ Multiple variables can be used to sort data in rows.  The priority of sorting fo
 The ascend_rows or descend_rows functions works with set_groups function.  The grouping variables would be seperated and placed to the left-hand most columns of the data.table.
 
 ```{r}
-dt |> ascend_rows(cyl, vs, am)
-dt |> descend_rows(cyl, vs, am)
+dt |> ascend_rows(vs, mpg)
+dt |> ascend_rows(c("vs", "mpg"))
+dt |> descend_rows(vs, mpg)
+dt |> descend_rows(c("vs", "mpg"))
 
-dt |> set_group(cyl) |> ascend_rows(vs, am, gear)
-dt |> set_group(cyl) |> descend_rows(vs, am, gear)
+dt |> set_group(cyl) |> ascend_rows(vs, mpg)
+dt |> set_group(cyl) |> ascend_rows(c("vs", "mpg"))
+dt |> set_group(cyl) |> descend_rows(vs, mpg)
+dt |> set_group(cyl) |> descend_rows(c("vs", "mpg"))
 ```
+## Arranging data columns
+
+```{r arrange_by_rows}
+(dt |> arrange_cols(at="start", mpg, drat, hp))
+(dt |> arrange_cols(at="cyl", mpg, drat, hp))
+(dt |> arrange_cols(at=cyl, mpg, drat, hp))
+(dt |> arrange_cols(at="end", c("mpg", "drat", "hp")))
+```
+

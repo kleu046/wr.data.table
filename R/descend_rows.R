@@ -6,12 +6,31 @@
 #' @param dt input data.table
 #' @param ... column/variable names in the data.table to be used for ordering
 #'   the raws of data
+#' @examples
+#' \dontrun{
+#' # in descending order by values in weight and mpg
+#' dt |> descend_rows(wt, mpg)
+#' # group using cyl and order by wt and mpg
+#' dt |> set_group(cyl) |> descend_rows(wt, mpg)
+#' }
 #' @export
 descend_rows <- function(dt, ...) {
-  dots <- substitute(list(...))
+  dots <- NULL
+  # try: would not work if ... are symbols
+  try({
+    dots <- eval(substitute(...))
+  }, silent = TRUE)
+  # convert symbols into characters
+  if (is.null(dots)) {
+    dots <- as.character(substitute(list(...)))
+    dots <- dots[2:length(dots)]
+  }
+
+  # with groups
   if (!is.null(attributes(dt)$group)) {
-    copy(dt)[,.SD[order(eval(dots,.SD), decreasing=TRUE),],by=eval(attributes(dt)$group)]
+    copy(dt)[,.SD[order(.SD[,dots,with=F], decreasing=T),],by=eval(attributes(dt)$group)]
+    # no groups
   } else {
-    copy(dt)[order(eval(dots,dt), decreasing=TRUE),]
+    copy(dt)[order(dt[,dots,with=F], decreasing=T),]
   }
 }
