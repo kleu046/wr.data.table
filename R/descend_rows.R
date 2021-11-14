@@ -4,7 +4,7 @@
 #'   package.
 #' @usage descend_rows(dt, ...)
 #' @param dt input data.table
-#' @param ... column/variable names in the data.table to be used for ordering
+#' @param ... column names or a vector of characters of column names in the data.table to be used for ordering
 #'   the raws of data
 #' @examples
 #' \dontrun{
@@ -23,14 +23,15 @@ descend_rows <- function(dt, ...) {
   # convert symbols into characters
   if (is.null(dots)) {
     dots <- as.character(substitute(list(...)))
+    dots <- gsub("`", "", dots)
     dots <- dots[2:length(dots)]
   }
 
   # with groups
   if (!is.null(attributes(dt)$group)) {
-    copy(dt)[,.SD[order(.SD[,dots,with=F], decreasing=T),],by=eval(attributes(dt)$group)]
+    copy(dt)[,.SD[order(.SD[,dots,with=F],decreasing=T),],by=eval(attributes(dt)$group)]
     # no groups
   } else {
-    copy(dt)[order(dt[,dots,with=F], decreasing=T),]
+    copy(dt)[order(dt[,dots,with=F],decreasing=T),]
   }
 }

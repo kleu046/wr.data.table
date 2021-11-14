@@ -7,8 +7,8 @@
 #'   column names, which will place the selected columns after the "at" column.
 #'   Alternatively use "start" or "end" for placing the selected columns before
 #'   the first column or after the last column respectively
-#' @param ... a vector of characters of column names or column names seperated
-#'   by commas (NSE)
+#' @param ... a vector of characters of column names or valid column names seperated
+#'   by commas.
 #' @examples
 #' \dontrun{
 #' arrange_cols(dt, at=`vehicle model`, qsec, vs, am)
@@ -26,11 +26,11 @@ arrange_cols <- function(dt, at, ...) {
   dots <- NULL
   try({
     dots <- eval(substitute(...))
-  }, silent = TRUE)
+  }, silent = T)
   if (is.null(dots)) {
     dots <- as.character(substitute(list(...)))
+    dots <- gsub("`", "", dots)
     dots <- dots[2:length(dots)]
-
   }
 
   # expand range of column names

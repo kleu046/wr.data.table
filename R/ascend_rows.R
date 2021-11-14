@@ -4,7 +4,7 @@
 #'   package.
 #' @usage ascend_rows(dt, ...)
 #' @param dt input data.table
-#' @param ... column/variable names in the data.table to be used for ordering
+#' @param ... column names or a vector of characters of column names in the data.table to be used for ordering
 #'   the raws of data
 #' @examples
 #' \dontrun{
@@ -25,6 +25,7 @@ ascend_rows <- function(dt, ...) {
   # convert symbols into characters
   if (is.null(dots)) {
     dots <- as.character(substitute(list(...)))
+    dots <- gsub("`", "", dots)
     dots <- dots[2:length(dots)]
   }
 
