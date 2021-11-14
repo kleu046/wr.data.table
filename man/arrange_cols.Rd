@@ -14,8 +14,8 @@ column names, which will place the selected columns after the "at" column.
 Alternatively use "start" or "end" for placing the selected columns before
 the first column or after the last column respectively}
 
-\item{...}{a vector of characters of column names or column names seperated
-by commas (NSE)}
+\item{...}{a vector of characters of column names or valid column names seperated
+by commas.}
 }
 \description{
 This wrapper function make use of the setcolorder() function and
@@ -23,6 +23,7 @@ arrange columns by placing selected columns after the specified position.
 }
 \examples{
 \dontrun{
+dt <- data1 |> dt_keeprownames() |> rn_cols(rn=`vehicle model`)
 arrange_cols(dt, at=`vehicle model`, qsec, vs, am)
 arrange_cols(dt, at="start", c("qsec", "vs", "am"))
 arrange_cols(dt, at="mpg", qsec:am, carb)

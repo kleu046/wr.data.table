@@ -52,7 +52,7 @@ dt
 User can rename columns of the data.table using rn_cols().  Note that rn_cols() function renames the original data.table therefore assigning the output back to dt is not necessary.  The function does provide the data.table as output so that user can use this function in piping.
 
 ```{r rename_rn_column}
-dt |> rn_cols(rn = `vehicle model`)
+dt <- dt |> rn_cols(rn = `vehicle model`)
 dt
 ```
 

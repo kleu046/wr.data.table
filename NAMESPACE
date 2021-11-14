@@ -2,11 +2,13 @@
 
 export(arrange_cols)
 export(ascend_rows)
+export(char_to_symbol)
 export(condense)
 export(def_cols)
 export(descend_rows)
 export(desel_cols)
 export(dt_keeprownames)
+export(expand_colnames)
 export(filter_rows)
 export(mkdt)
 export(rm_group)

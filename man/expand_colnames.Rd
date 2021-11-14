@@ -12,14 +12,15 @@ expand_colnames(dt, range)
 \item{range}{a string defining range of columns using ":" notation}
 }
 \description{
-Given a data.table or data.frame and a string of column range using the ":",
-expand and find all columns within that range, including the columns stated as the beginning and
-end of the range
+Given a data.table or data.frame and a string of column range
+using the ":", expand and find all columns within that range, including the
+columns stated as the beginning and end of the range
 }
 \details{
-This helper function is useful for extracting and finding the columns between the bracket
-of column names provided.  This is useful when evaluating the columns required when other
-wr_ functions use non-standard evaluation.
+This helper function is useful for extracting and finding the
+columns between the bracket of column names provided.  This is useful when
+evaluating the columns required when other wr_ functions use non-standard
+evaluation.
 
 This function is used internally in the package and not exported
 }

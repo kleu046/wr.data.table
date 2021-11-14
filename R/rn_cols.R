@@ -19,23 +19,23 @@
 #' @importFrom data.table setnames
 #' @export
 rn_cols <- function(dt, old=NULL, new=NULL, ...){
-
+  dt_copy <- copy(dt)
   if (is.null(old) & is.null(new)) {
     dots <- substitute(list(...))
     col_names <- names(dots)
     for (i in 2:length(dots)) {
-      setnames(dt, toString(col_names[i]), toString(dots[[i]]))
+      setnames(dt_copy, toString(col_names[i]), toString(dots[[i]]))
     }
   } else {
     stopifnot(exprs = {
       length(old) == length(new)
       is.character(old)
       is.character(new)
-      old %in% colnames(dt)
+      old %in% colnames(dt_copy)
     })
     for (i in 1:length(old)) {
-      setnames(dt, old[i], new[i])
+      setnames(dt_copy, old[i], new[i])
     }
   }
-  dt
+  dt_copy
 }

@@ -11,6 +11,7 @@
 #'   by commas.
 #' @examples
 #' \dontrun{
+#' dt <- data1 |> dt_keeprownames() |> rn_cols(rn=`vehicle model`)
 #' arrange_cols(dt, at=`vehicle model`, qsec, vs, am)
 #' arrange_cols(dt, at="start", c("qsec", "vs", "am"))
 #' arrange_cols(dt, at="mpg", qsec:am, carb)

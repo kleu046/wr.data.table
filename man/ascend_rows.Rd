@@ -9,7 +9,7 @@ ascend_rows(dt, ...)
 \arguments{
 \item{dt}{input data.table}
 
-\item{...}{column/variable names in the data.table to be used for ordering
+\item{...}{column names or a vector of characters of column names in the data.table to be used for ordering
 the raws of data}
 }
 \description{
@@ -20,6 +20,8 @@ package.
 \examples{
 \dontrun{
  # in descending order by values in weight and mpg
+ dt <- data1 |> data.table()
+
  dt |> ascend_rows(wt, mpg)
 
  # group using cyl and order by wt and mpg
