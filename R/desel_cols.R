@@ -1,13 +1,12 @@
 #' Function to subset data.table by removal columns/variables
 #'
-#' @description This function is similar to
+#' @description This function is similar to sel_cols and used to deselect
+#'   columns in a data.table
 #'
 #' @usage desel_cols(dt, ...)
 #'
 #' @param dt a \code{data.table}
-#' @param ... some parameters
-#'
-#' @import data.table
+#' @param ... characters or vector of characters of column names or column names as symbols
 #'
 #' @export
 desel_cols <- function(dt, ...) {
@@ -25,6 +24,11 @@ desel_cols <- function(dt, ...) {
   cols <- c(
     sapply(argsAsStringIsRange, function(x) {expand_colnames(dt, x)}) |> unlist(),
     argsAsString[!isRange] |> unlist())
+
+  # remove "c" if vector of characters of column names were provided
+  if (cols[1] == "c") {
+    cols <- cols[-1]
+  }
 
   copy(dt)[,!c(cols),with=F]
 }
