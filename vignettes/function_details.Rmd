@@ -73,7 +73,7 @@ Instead of selecting columns, user can also choose to deselect certain columns.
 
 User can use expressions and grepl() in filter_rows() function to filter and subset the data in rows.
 
-```{r}
+```{r filter_rows}
 dt |> filter_rows(mpg >= 20)
 
 dt |> filter_rows(grepl("^M", `vehicle model`))
@@ -87,10 +87,17 @@ When the condense() function is called, the group attribute is used as the "by" 
 
 The example below calculates the mean and standard deviation of the data by groups of "gear" and "vs".  Note that .I notation used in data.table also works here
 
-```{r}
+```{r condense1}
 subset |> set_group(`vehicle model`, gear, vs) |> attributes()
 
 subset |> set_group(`vehicle model`, gear, vs) |> condense(mu_mpg=round(mean(mpg),2), sd_mpg=round(sd(mpg),2), count=.N) |> rm_group()
+```
+
+Characters can be used to refer to column names, but it needs to be parse into unevaluated symbols first
+
+```{r condense2}
+myvar <- "mpg"
+condense(dt |> set_group(vs), mu_mpg = mean(eval(char_to_symbol(myvar))))
 ```
 
 ## Creating new columns
