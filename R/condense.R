@@ -3,6 +3,8 @@
 #'   the dplyr package. It is simply a wrapper function using data.table syntax
 #'   which performs a similar function as dplyr::summarize()
 #'
+#'   Variable names in characters need to be parsed into symbols first
+#'
 #' @usage condense(dt, ...)
 #'
 #' @param dt input data.table
