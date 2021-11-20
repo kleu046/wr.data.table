@@ -6,7 +6,7 @@
 #' @usage def_cols(dt, ...)
 #'
 #' @param dt a \code{data.table}
-#' @param ... expression setting up a new column.  E.g. kmpl = mpg / 2.35215.
+#' @param ... expression setting up a new column.  E.g. kpl = mpg / 2.35215.
 #' More than one new columns can be created by having expressions separated by commas
 #'
 #' @return returns a \code{data.table}
@@ -28,22 +28,14 @@ def_cols <- function(dt, ...) {
 
   dots <- substitute(list(...))
 
-  #print(sapply(dots[-1], deparse))
-
-  # has_quote <- c()
-  # for (i in 2:length(dots)){
-  #   deparse_expr <- deparse(dots[i])
-  #   has_quote <- c(has_quote, grepl("^`.*`()", deparse_expr))
-  # }
-  #
-  # out <- ifelse(has_quote, paste0("`", dots[-1], "`"), paste0(dots[-1]))
-
   dots <- paste(
     paste(paste0("`",names(dots[-1]),"`"),
           paste0(dots[-1]),
           #out,
           sep="="),
     collapse=",")
+
   callAsString <- paste0("copy(dt)[,`:=`(",dots,")]")
+
   eval(parse(text=callAsString))
 }
