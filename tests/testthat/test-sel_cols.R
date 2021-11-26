@@ -7,9 +7,6 @@ test_that("sel_cols is working", {
                copy(dt)[,c("vs", "mpg","cyl","disp","hp","am","gear","carb")])
   expect_equal(sel_cols(dt, "vs", "am", "gear"),
                copy(dt)[,c("vs","am","gear")])
-  expect_equal(sel_cols(dt, c("vs", "am", "gear")),
-               copy(dt)[,c("vs","am","gear")])
-
 })
 rm(dt)
 
