@@ -9,8 +9,9 @@ desel_cols(dt, ...)
 \arguments{
 \item{dt}{a \code{data.table}}
 
-\item{...}{some parameters}
+\item{...}{characters or vector of characters of column names or column names as symbols}
 }
 \description{
-This function is similar to
+This function is similar to sel_cols and used to deselect
+columns in a data.table
 }

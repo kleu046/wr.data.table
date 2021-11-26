@@ -18,6 +18,8 @@ returns a \code{data.table}
 The condense function is similar to the summarize function in
 the dplyr package. It is simply a wrapper function using data.table syntax
 which performs a similar function as dplyr::summarize()
+
+Variable names in characters need to be parsed into symbols first
 }
 \examples{
 \dontrun{

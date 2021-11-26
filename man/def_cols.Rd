@@ -9,7 +9,7 @@ def_cols(dt, ...)
 \arguments{
 \item{dt}{a \code{data.table}}
 
-\item{...}{expression setting up a new column.  E.g. kmpl = mpg / 2.35215.
+\item{...}{expression setting up a new column.  E.g. kpl = mpg / 2.35215.
 More than one new columns can be created by having expressions separated by commas}
 }
 \value{
