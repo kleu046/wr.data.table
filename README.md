@@ -29,8 +29,8 @@ available at https://github.com/Rdatatable/data.table.git
 
 ## Installation
 You can install the released version of wr.data.table from
-[CRAN](https://CRAN.R-project.org) with:
-You can also install using devtools::install_github("kleu046/wr.data.table")
+[CRAN](https://CRAN.R-project.org) with: WIP
+You can install using devtools::install_github("kleu046/wr.data.table")
 The package can be downloaded as a zip file on
 https://github.com/kleu046/wr.data.table.git
 Use install.packages(file.choose(), repos=NULL, type="source") to install with
@@ -38,4 +38,4 @@ the zip file ``` r install.packages("wr.data.table") ```
 
 ## Example
 This is a basic example which shows you how to solve a common problem:
-``` r library(wr.data.table) ## basic example code ```
+``` r library(wr.data.table) ## basic example code ``` WIP
