@@ -31,7 +31,7 @@ available at https://github.com/Rdatatable/data.table.git
 You can install the released version of wr.data.table from
 [CRAN](https://CRAN.R-project.org) with: WIP
 You can install using devtools::install_github("kleu046/wr.data.table")
-The package can be downloaded as a zip file on
+Alternatively, the package can be downloaded as a zip file on
 https://github.com/kleu046/wr.data.table.git
 Use install.packages(file.choose(), repos=NULL, type="source") to install with
 the zip file ``` r install.packages("wr.data.table") ```
