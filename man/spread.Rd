@@ -2,7 +2,7 @@
 % Please edit documentation in R/spread.R
 \name{spread}
 \alias{spread}
-\title{long to short data}
+\title{Long to short data}
 \usage{
 spread(dt, key, value)
 }
@@ -14,5 +14,5 @@ spread(dt, key, value)
 \item{value}{data values for new columns}
 }
 \description{
-long to short data
+Long to short data
 }
