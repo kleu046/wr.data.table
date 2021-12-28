@@ -21,7 +21,7 @@ sel_cols <- function(dt, ...) {
   dots <- as.character(substitute(list(...)))
   dots <- dots[2:length(dots)]
 
-  print(dots)
+  #print(dots)
 
   cols <- NULL
   for (i in 1:length(dots)) {
@@ -33,7 +33,7 @@ sel_cols <- function(dt, ...) {
     }
   }
 
-  print(cols)
+  #print(cols)
 
   copy(dt)[,c(unique(cols)),with=F]
 }
