@@ -16,6 +16,7 @@
 #'  # group using cyl and order by wt and mpg
 #'  dt |> set_group(cyl) |> ascend_rows(wt, mpg)
 #' }
+#' @importFrom data.table setorderv
 #' @export
 ascend_rows <- function(dt, ...) {
 
@@ -36,7 +37,9 @@ ascend_rows <- function(dt, ...) {
     copy(dt)[,.SD[order(.SD[,dots,with=F]),],by=eval(attributes(dt)$group)]
   # no groups
   } else {
-    copy(dt)[order(dt[,dots,with=F]),]
+    dt_copy <- copy(dt)
+    setorderv(dt_copy, dots)
+    return(dt_copy)
   }
 }
 

@@ -13,6 +13,7 @@
 #' # group using cyl and order by wt and mpg
 #' dt |> set_group(cyl) |> descend_rows(wt, mpg)
 #' }
+#' @importFrom data.table setorderv
 #' @export
 descend_rows <- function(dt, ...) {
   dots <- NULL
@@ -26,12 +27,14 @@ descend_rows <- function(dt, ...) {
     dots <- gsub("`", "", dots)
     dots <- dots[2:length(dots)]
   }
-
+  print(dots)
   # with groups
   if (!is.null(attributes(dt)$group)) {
     copy(dt)[,.SD[order(.SD[,dots,with=F],decreasing=T),],by=eval(attributes(dt)$group)]
     # no groups
   } else {
-    copy(dt)[order(dt[,dots,with=F],decreasing=T),]
+    dt_copy <- copy(dt)
+    setorderv(dt_copy, dots, rep(-1, length(dots)))
+    return(dt_copy)
   }
 }
