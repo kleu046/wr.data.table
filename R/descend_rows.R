@@ -33,8 +33,6 @@ descend_rows <- function(dt, ...) {
     copy(dt)[,.SD[order(.SD[,dots,with=F],decreasing=T),],by=eval(attributes(dt)$group)]
     # no groups
   } else {
-    dt_copy <- copy(dt)
-    setorderv(dt_copy, dots, rep(-1, length(dots)))
-    return(dt_copy)
+    copy(dt)[order(dt[,dots,with=F],decreasing=T),]
   }
 }

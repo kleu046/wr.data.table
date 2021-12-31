@@ -37,9 +37,7 @@ ascend_rows <- function(dt, ...) {
     copy(dt)[,.SD[order(.SD[,dots,with=F]),],by=eval(attributes(dt)$group)]
   # no groups
   } else {
-    dt_copy <- copy(dt)
-    setorderv(dt_copy, dots)
-    return(dt_copy)
+    copy(dt)[order(dt[,dots,with=F]),]
   }
 }
 
