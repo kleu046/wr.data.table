@@ -31,7 +31,7 @@ ascend_rows <- function(dt, ...) {
     dots <- gsub("`", "", dots)
     dots <- dots[2:length(dots)]
   }
-  print(dots)
+
   # with groups
   if (!is.null(attributes(dt)$group)) {
     copy(dt)[,.SD[order(.SD[,dots,with=F]),],by=eval(attributes(dt)$group)]
