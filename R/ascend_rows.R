@@ -26,12 +26,12 @@ ascend_rows <- function(dt, ...) {
     dots <- eval(substitute(...))
   }, silent = TRUE)
   # convert symbols into characters
-  if (is.null(dots)) {
+  if (is.null(dots) | any(is.function(dots))) {
     dots <- as.character(substitute(list(...)))
     dots <- gsub("`", "", dots)
     dots <- dots[2:length(dots)]
   }
-
+  print(dots)
   # with groups
   if (!is.null(attributes(dt)$group)) {
     copy(dt)[,.SD[order(.SD[,dots,with=F]),],by=eval(attributes(dt)$group)]
