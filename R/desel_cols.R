@@ -12,22 +12,29 @@
 desel_cols <- function(dt, ...) {
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 
-  args <- (substitute(list(...)))
+  cols <- NULL
+  try(cols <- eval(..., envir = dt), silent = TRUE)
+  print(cols)
+  if (class(cols) != "character") {
 
-  argsAsString <- lapply(args[-1], as.character)
+    args <- (substitute(list(...)))
 
-  isRange <- grepl(":", argsAsString)
+    argsAsString <- lapply(args[-1], as.character)
 
-  argsAsStringIsRange <- lapply(argsAsString[isRange], function(x){
-      paste0(x[2], ":", x[3])
-  })
-  cols <- c(
-    sapply(argsAsStringIsRange, function(x) {expand_colnames(dt, x)}) |> unlist(),
-    argsAsString[!isRange] |> unlist())
+    isRange <- grepl(":", argsAsString)
 
-  # remove "c" if vector of characters of column names were provided
-  if (cols[1] == "c") {
-    cols <- cols[-1]
+    argsAsStringIsRange <- lapply(argsAsString[isRange], function(x){
+        paste0(x[2], ":", x[3])
+    })
+
+    cols <- c(
+      sapply(argsAsStringIsRange, function(x) {expand_colnames(dt, x)}) |> unlist(),
+      argsAsString[!isRange] |> unlist())
+
+    # remove "c" if vector of characters of column names were provided
+    if (cols[1] == "c") {
+      cols <- cols[-1]
+    }
   }
 
   copy(dt)[,!c(cols),with=F]
