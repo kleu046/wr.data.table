@@ -18,10 +18,13 @@
 sel_cols <- function(dt, ...) {
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 
-  dots <- as.character(substitute(list(...)))
-  dots <- dots[2:length(dots)]
+  dots <- NULL
+  try(dots <- eval(..., envir = dt), silent = TRUE)
 
-  #print(dots)
+  if (class(dots) != "character") {
+    dots <- as.character(substitute(list(...)))
+    dots <- dots[2:length(dots)]
+  }
 
   cols <- NULL
   for (i in 1:length(dots)) {
