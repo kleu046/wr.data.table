@@ -18,13 +18,15 @@
 sel_cols <- function(dt, ...) {
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 
-  dots <- NULL
-  try(dots <- eval(..., envir = dt), silent = TRUE)
+  try({
+    if (class(eval(...)) == "character") {
+      dots <- eval(...)
+      return(copy(dt)[,dots,with=F])
+    }
+  })
 
-  if (class(dots) != "character") {
-    dots <- as.character(substitute(list(...)))
-    dots <- dots[2:length(dots)]
-  }
+  dots <- as.character(substitute(list(...)))
+  dots <- dots[2:length(dots)]
 
   cols <- NULL
   for (i in 1:length(dots)) {
@@ -35,8 +37,6 @@ sel_cols <- function(dt, ...) {
       cols <- c(cols, gsub("`", "", dots[i]))
     }
   }
-
-  #print(cols)
 
   copy(dt)[,c(unique(cols)),with=F]
 }

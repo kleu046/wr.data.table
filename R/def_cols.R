@@ -31,7 +31,6 @@ def_cols <- function(dt, ...) {
   dots <- paste(
     paste(paste0("`",names(dots[-1]),"`"),
           paste0(dots[-1]),
-          #out,
           sep="="),
     collapse=",")
 
