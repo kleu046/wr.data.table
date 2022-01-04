@@ -12,30 +12,32 @@
 desel_cols <- function(dt, ...) {
   stopifnot("dt must be data.table" = any(class(dt) == "data.table"))
 
-  cols <- NULL
-  try(cols <- eval(..., envir = dt), silent = TRUE)
-  print(cols)
-  if (class(cols) != "character") {
-
-    args <- (substitute(list(...)))
-
-    argsAsString <- lapply(args[-1], as.character)
-
-    isRange <- grepl(":", argsAsString)
-
-    argsAsStringIsRange <- lapply(argsAsString[isRange], function(x){
-        paste0(x[2], ":", x[3])
-    })
-
-    cols <- c(
-      sapply(argsAsStringIsRange, function(x) {expand_colnames(dt, x)}) |> unlist(),
-      argsAsString[!isRange] |> unlist())
-
-    # remove "c" if vector of characters of column names were provided
-    if (cols[1] == "c") {
-      cols <- cols[-1]
+  try({
+    if (class(eval(...)) == "character") {
+      dots <- eval(...)
+      return(copy(dt)[,!dots,with=F])
     }
+  })
+
+  args <- (substitute(list(...)))
+
+  argsAsString <- lapply(args[-1], as.character)
+
+  isRange <- grepl(":", argsAsString)
+
+  argsAsStringIsRange <- lapply(argsAsString[isRange], function(x){
+      paste0(x[2], ":", x[3])
+  })
+
+  cols <- c(
+    sapply(argsAsStringIsRange, function(x) {expand_colnames(dt, x)}) |> unlist(),
+    argsAsString[!isRange] |> unlist())
+
+  # remove "c" if vector of characters of column names were provided
+  if (cols[1] == "c") {
+    cols <- cols[-1]
   }
+  #}
 
   copy(dt)[,!c(cols),with=F]
 }

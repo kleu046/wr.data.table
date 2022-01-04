@@ -11,7 +11,7 @@
 #'
 #' @return returns a \code{data.table}
 #'
-#' @import data.table
+#' @importFrom data.table copy
 #'
 #' @examples
 #' \dontrun{
@@ -31,11 +31,10 @@ def_cols <- function(dt, ...) {
   dots <- paste(
     paste(paste0("`",names(dots[-1]),"`"),
           paste0(dots[-1]),
-          #out,
           sep="="),
     collapse=",")
 
-  callAsString <- paste0("copy(dt)[,`:=`(",dots,")]")
+  callAsString <- paste0("data.table::copy(dt)[,`:=`(",dots,")]")
 
   eval(parse(text=callAsString))
 }

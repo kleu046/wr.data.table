@@ -16,7 +16,7 @@
 #' arrange_cols(dt, at="start", c("qsec", "vs", "am"))
 #' arrange_cols(dt, at="mpg", qsec:am, carb)
 #' }
-#' @importFrom data.table setcolorder
+#' @importFrom data.table setcolorder copy
 #' @export
 arrange_cols <- function(dt, at, ...) {
   if(is.symbol(substitute(at))) {
