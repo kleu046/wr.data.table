@@ -36,5 +36,5 @@ def_cols <- function(dt, ...) {
 
   callAsString <- paste0("data.table::copy(dt)[,`:=`(",dots,")]")
 
-  eval(parse(text=callAsString), envir=dt)
+  eval(parse(text=callAsString))
 }
