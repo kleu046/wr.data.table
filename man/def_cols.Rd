@@ -9,20 +9,20 @@ def_cols(dt, ...)
 \arguments{
 \item{dt}{a \code{data.table}}
 
-\item{...}{expression setting up a new column.  E.g. kpl = mpg / 2.35215.
-More than one new columns can be created by having expressions separated by commas}
+\item{...}{formula using \code{~} notation where LHS is the new column name and RHS is an expression for the values
+More than one new columns can be created by having formulas separated by commas}
 }
 \value{
 returns a \code{data.table}
 }
 \description{
-For more information about \code{data.table} and \code{setorder()} \href{http://www.google.com}{Google it}.
+function used to create new columns in data.table using non-standard evaluation
 }
 \examples{
 \dontrun{
 dt <- data.table(mtcars)
-def_cols(dt, kmpl = mpg / 2.35215, wt_in_kg = wt / 2.20462)
+define(dt, kmpl ~ mpg / 2.35215, wt_in_kg ~ wt / 2.20462)
 # creating two columns / converted units
-def_cols(dt, am = NULL) # remove a column
+define(dt, am = NULL) # remove a column
 }
 }
