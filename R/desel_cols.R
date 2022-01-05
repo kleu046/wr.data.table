@@ -17,7 +17,7 @@ desel_cols <- function(dt, ...) {
       dots <- eval(...)
       return(copy(dt)[,!dots,with=F])
     }
-  })
+  }, silent = TRUE)
 
   args <- (substitute(list(...)))
 
