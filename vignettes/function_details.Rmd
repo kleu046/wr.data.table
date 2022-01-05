@@ -107,14 +107,14 @@ User can def new columns using the def_cols() function
 For example, user can create an index column followed by using the arrange_cols() function to place the index column at the front of the data.table
 
 ```{r}
-subset1 <- subset |> def_cols(index = .I) |> arrange_cols(at="start", index)
+subset1 <- subset |> def_cols(index ~ 1:nrow(subset)) |> arrange_cols(at="start", index)
 subset1
 ```
 
 User can create new columns from existing columns, for example,
 
 ```{r}
-subset2 <- subset1 |> def_cols(kpL = mpg * 0.425144, vs = ifelse(vs==0, "V-shaped", "Straight")) |> arrange_cols(at=mpg, kpL)
+subset2 <- subset1 |> def_cols(kpL ~ mpg * 0.425144, vs ~ ifelse(vs==0, "V-shaped", "Straight")) |> arrange_cols(at=mpg, kpL)
 subset2
 ```
 
