@@ -23,7 +23,7 @@ sel_cols <- function(dt, ...) {
       dots <- eval(...)
       return(copy(dt)[,dots,with=F])
     }
-  })
+  }, silent=TRUE)
 
   dots <- as.character(substitute(list(...)))
   dots <- dots[2:length(dots)]
