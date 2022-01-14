@@ -36,7 +36,7 @@ def_cols <- function(dt, ...) {
     callasstring <- paste0("def_cols_copy_dt[,",deparse(nm[[i]]),":=",deparse(dots[[i]][[3]]),"]")
     eval(parse(text=callasstring), envir=env)
   }
-  dt_copy <- eval(quote(copy(def_cols_copy_dt)), envir = env)
+  dt_copy <- eval(quote(data.table::copy(def_cols_copy_dt)), envir = env)
   # rm(def_cols_copy_dt, envir = env)
   return(dt_copy)
 }
