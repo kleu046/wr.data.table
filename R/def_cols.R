@@ -10,6 +10,7 @@
 #' @return returns a \code{data.table}
 #'
 #' @importFrom data.table copy
+#' @importFrom furrr future_map
 #' @importFrom rlang caller_env
 #'
 #' @examples
