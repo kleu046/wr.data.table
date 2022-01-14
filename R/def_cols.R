@@ -10,7 +10,6 @@
 #' @return returns a \code{data.table}
 #'
 #' @importFrom data.table copy
-#' @importFrom furrr future_map
 #' @importFrom rlang caller_env
 #'
 #' @examples
@@ -22,19 +21,21 @@
 #' }
 #' @export
 def_cols <- function(dt, ...) {
-  env <- caller_env()
+  env = caller_env()
+
   dots <- substitute(list(...))
 
   nm <- future_map(2:length(dots), function(i) paste0(dots[[i]][[2]]))
 
-  data <-
-    future_map(2:length(dots), function(i) {
-      eval(dots[[i]][[3]], envir=dt, enclos=env)
-    })
+  dots <- dots[2:length(dots)]
 
-  copy_dt <- copy(dt)
+  eval(quote(def_cols_copy_dt <- eval(dt)), envir = env)
+
   for (i in 1:length(nm)) {
-    copy_dt[,nm[[i]]:=data[[i]]]
+    callasstring <- paste0("def_cols_copy_dt[,",deparse(nm[[i]]),":=",deparse(dots[[i]][[3]]),"]")
+    eval(parse(text=callasstring), envir=env)
   }
-  copy_dt
+  dt_copy <- eval(quote(copy(def_cols_copy_dt)), envir = env)
+  rm(def_cols_copy_dt, envir = env)
+  return(dt_copy)
 }
