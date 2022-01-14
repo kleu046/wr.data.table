@@ -15,14 +15,14 @@ library(dplyr)
 ```{r generate_data, include=FALSE}
 dt <- data.table(mtcars)
 
-dt_keeprownames <- function(dt, n) {
+DTkeeprownames <- function(dt, n) {
   for (i in 1:n) {
     dt <- rbind(dt, dt)
   }
   data.table(dt)
 }
 
-manyRows <- lapply(c(2,5,10),function(x){dt_keeprownames(dt, x)})
+manyRows <- lapply(c(2,5,10),function(x){DTkeeprownames(dt, x)})
 #str(manyRows)
 
 
@@ -96,4 +96,15 @@ result_condense_cols <- purrr::map(manyCols, function(x){
 })
 result_condense_cols
 purrr::map(result_condense_cols, boxplot)
+```
+```{r def_cols}
+result_def_cols <- purrr::map(manyCols, function(x){
+  microbenchmark::microbenchmark(
+    getDT(x) |> def_cols(mpggreaterthan19=mpg > 19),
+    getDT(x)[,.(mpggreaterthan19=mpg>19)],
+    getDT(x) |> mutate(mpggreaterthan19=mpg>19)
+  )
+})
+result_def_cols
+purrr::map(result_def_cols, boxplot)
 ```
