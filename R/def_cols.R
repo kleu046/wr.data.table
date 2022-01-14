@@ -36,6 +36,6 @@ def_cols <- function(dt, ...) {
     eval(parse(text=callasstring), envir=env)
   }
   dt_copy <- eval(quote(copy(def_cols_copy_dt)), envir = env)
-  rm(def_cols_copy_dt, envir = env)
+  # rm(def_cols_copy_dt, envir = env)
   return(dt_copy)
 }
