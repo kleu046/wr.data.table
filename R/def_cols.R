@@ -22,6 +22,8 @@
 #' }
 #' @export
 def_cols <- function(dt, ...) {
+  dt_symbol <- substitute(dt)
+
   env = caller_env()
 
   dots <- substitute(list(...))
@@ -30,13 +32,13 @@ def_cols <- function(dt, ...) {
 
   dots <- dots[2:length(dots)]
 
-  eval(quote(def_cols_copy_dt <- eval(dt)), envir = env)
+  eval(parse(text=paste0("copy_def_cols_dt <- data.table::copy(",dt_symbol,")")), envir=env)
 
   for (i in 1:length(nm)) {
-    callasstring <- paste0("def_cols_copy_dt[,",deparse(nm[[i]]),":=",deparse(dots[[i]][[3]]),"]")
+    callasstring <- paste0(dt_symbol,"[,",deparse(nm[[i]]),":=",deparse(dots[[i]][[3]]),"]")
+    print(callasstring)
     eval(parse(text=callasstring), envir=env)
   }
-  dt_copy <- eval(quote(data.table::copy(def_cols_copy_dt)), envir = env)
-  # rm(def_cols_copy_dt, envir = env)
-  return(dt_copy)
+
+  return(dt)
 }
