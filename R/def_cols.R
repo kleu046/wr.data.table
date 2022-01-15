@@ -28,9 +28,10 @@ def_cols <- function(dt, ...) {
   env$dt_copyfromdefcols <- dt
 
   dots <- substitute(list(...))
-  dots <- dots[2:length(dots)]
 
   nm <- future_map(2:length(dots), function(i) paste0(dots[[i]][[2]]))
+
+  dots <- dots[2:length(dots)]
 
   for (i in 1:length(nm)) {
     callasstring <- paste0("dt_copyfromdefcols[,`:=`(",deparse(nm[[i]]),"=",deparse(dots[[i]][[3]]),")]")
