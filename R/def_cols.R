@@ -32,13 +32,12 @@ def_cols <- function(dt, ...) {
 
   dots <- dots[2:length(dots)]
 
-  eval(parse(text=paste0("copy_def_cols_dt <- data.table::copy(",dt_symbol,")")), envir=env)
+  #eval(parse(text=paste0("copy_def_cols_dt <- data.table::copy(",dt_symbol,")")), envir=env)
 
   for (i in 1:length(nm)) {
     callasstring <- paste0(dt_symbol,"[,",deparse(nm[[i]]),":=",deparse(dots[[i]][[3]]),"]")
-    print(callasstring)
     eval(parse(text=callasstring), envir=env)
   }
 
-  return(dt)
+  return(eval(dt_symbol, envir = env))
 }
