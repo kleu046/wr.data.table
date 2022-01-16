@@ -38,5 +38,5 @@ sel_cols <- function(dt, ...) {
     }
   }
 
-  copy(dt)[,c(unique(cols)),with=F]
+  return(copy(dt)[,c(unique(cols)),with=F])
 }

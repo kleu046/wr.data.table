@@ -97,10 +97,12 @@ result_condense_cols <- purrr::map(manyCols, function(x){
 result_condense_cols
 purrr::map(result_condense_cols, boxplot)
 ```
+
 ```{r def_cols}
+myvar <- "mpg"
 result_def_cols <- purrr::map(manyCols, function(x){
   microbenchmark::microbenchmark(
-    getDT(x) |> def_cols(mpggreaterthan19=mpg > 19),
+    getDT(x) |> def_cols(mpggreaterthan19 ~ dt[[myvar]] > 19),
     getDT(x)[,.(mpggreaterthan19=mpg>19)],
     getDT(x) |> mutate(mpggreaterthan19=mpg>19)
   )
