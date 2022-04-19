@@ -34,7 +34,7 @@ def_cols <- function(dt, ...) {
   dots <- dots[2:length(dots)]
 
   for (i in 1:length(nm)) {
-    callasstring <- paste0("dt_copyfromdefcols[,`:=`(",deparse(nm[[i]]),"=",deparse(dots[[i]][[3]], width.cutoff = 250L),")]")
+    callasstring <- paste0("dt_copyfromdefcols[,`:=`(",deparse(nm[[i]]),"=",deparse(dots[[i]][[3]], width.cutoff = 500L),")]")
     eval(parse(text=callasstring), envir=env)
   }
 
